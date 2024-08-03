@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "changelogDate": "20240803015451"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "answerText",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isCorrect",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Answer",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityField": "number",
+      "otherEntityName": "question",
+      "relationshipName": "question",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no"
+}

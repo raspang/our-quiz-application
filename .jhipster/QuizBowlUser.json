@@ -1,0 +1,32 @@
+{
+  "annotations": {
+    "changelogDate": "20240803015449"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "score",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "organization",
+      "fieldType": "String"
+    }
+  ],
+  "name": "QuizBowlUser",
+  "relationships": [
+    {
+      "options": {
+        "id": true,
+        "onDelete": "CASCADE"
+      },
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no"
+}

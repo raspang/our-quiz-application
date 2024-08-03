@@ -1,0 +1,102 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-question-heading" data-cy="QuestionCreateUpdateHeading">Create or edit a Question</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_number">Number</label>
+          <input type="number" class="form-control" name="number" id="field_number" data-cy="number" formControlName="number" />
+          @if (editForm.get('number')!.invalid && (editForm.get('number')!.dirty || editForm.get('number')!.touched)) {
+            <div>
+              @if (editForm.get('number')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('number')?.errors?.number">This field should be a number.</small>
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_difficultyLevel">Difficulty Level</label>
+          <input
+            type="number"
+            class="form-control"
+            name="difficultyLevel"
+            id="field_difficultyLevel"
+            data-cy="difficultyLevel"
+            formControlName="difficultyLevel"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_questionText">Question Text</label>
+          <input
+            type="text"
+            class="form-control"
+            name="questionText"
+            id="field_questionText"
+            data-cy="questionText"
+            formControlName="questionText"
+          />
+          @if (editForm.get('questionText')!.invalid && (editForm.get('questionText')!.dirty || editForm.get('questionText')!.touched)) {
+            <div>
+              @if (editForm.get('questionText')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_correctAnswer">Correct Answer</label>
+          <input
+            type="text"
+            class="form-control"
+            name="correctAnswer"
+            id="field_correctAnswer"
+            data-cy="correctAnswer"
+            formControlName="correctAnswer"
+          />
+          @if (editForm.get('correctAnswer')!.invalid && (editForm.get('correctAnswer')!.dirty || editForm.get('correctAnswer')!.touched)) {
+            <div>
+              @if (editForm.get('correctAnswer')?.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_enable">Enable</label>
+          <input type="checkbox" class="form-check" name="enable" id="field_enable" data-cy="enable" formControlName="enable" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

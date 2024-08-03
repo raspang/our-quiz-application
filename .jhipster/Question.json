@@ -1,0 +1,35 @@
+{
+  "annotations": {
+    "changelogDate": "20240803015450"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "number",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "difficultyLevel",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "questionText",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "correctAnswer",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "enable",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Question",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no"
+}

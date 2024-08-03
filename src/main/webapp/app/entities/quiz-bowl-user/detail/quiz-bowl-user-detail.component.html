@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (quizBowlUser()) {
+      <div>
+        <h2 data-cy="quizBowlUserDetailsHeading"><span>Quiz Bowl User</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ quizBowlUser()!.id }}</span>
+          </dd>
+          <dt><span>Score</span></dt>
+          <dd>
+            <span>{{ quizBowlUser()!.score }}</span>
+          </dd>
+          <dt><span>Organization</span></dt>
+          <dd>
+            <span>{{ quizBowlUser()!.organization }}</span>
+          </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            <span>{{ quizBowlUser()!.user?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/quiz-bowl-user', quizBowlUser()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
