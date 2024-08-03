@@ -50,6 +50,9 @@ public class CacheConfiguration {
             createCache(cm, gov.pglds.ourquizapp.domain.User.class.getName());
             createCache(cm, gov.pglds.ourquizapp.domain.Authority.class.getName());
             createCache(cm, gov.pglds.ourquizapp.domain.User.class.getName() + ".authorities");
+            createCache(cm, gov.pglds.ourquizapp.domain.QuizBowlUser.class.getName());
+            createCache(cm, gov.pglds.ourquizapp.domain.Question.class.getName());
+            createCache(cm, gov.pglds.ourquizapp.domain.Answer.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
