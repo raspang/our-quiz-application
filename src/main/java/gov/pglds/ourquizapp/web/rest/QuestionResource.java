@@ -2,6 +2,7 @@ package gov.pglds.ourquizapp.web.rest;
 
 import gov.pglds.ourquizapp.domain.Question;
 import gov.pglds.ourquizapp.repository.QuestionRepository;
+import gov.pglds.ourquizapp.security.AuthoritiesConstants;
 import gov.pglds.ourquizapp.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -53,6 +55,7 @@ public class QuestionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Question> createQuestion(@Valid @RequestBody Question question) throws URISyntaxException {
         log.debug("REST request to save Question : {}", question);
         if (question.getId() != null) {
@@ -75,6 +78,7 @@ public class QuestionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Question> updateQuestion(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Question question
@@ -109,6 +113,7 @@ public class QuestionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Question> partialUpdateQuestion(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Question question
@@ -161,6 +166,7 @@ public class QuestionResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of questions in body.
      */
     @GetMapping("")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<Question>> getAllQuestions(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Questions");
         Page<Question> page = questionRepository.findAll(pageable);
@@ -175,6 +181,7 @@ public class QuestionResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the question, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Question> getQuestion(@PathVariable("id") Long id) {
         log.debug("REST request to get Question : {}", id);
         Optional<Question> question = questionRepository.findById(id);
@@ -188,6 +195,7 @@ public class QuestionResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteQuestion(@PathVariable("id") Long id) {
         log.debug("REST request to delete Question : {}", id);
         questionRepository.deleteById(id);

@@ -27,23 +27,23 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link gov.pglds.ourquizapp.domain.Answer}.
+ * REST controller for managing {@link Answer}.
  */
 @RestController
-@RequestMapping("/api/answers")
+@RequestMapping("/api/participants")
 @Transactional
-public class AnswerResource {
+public class ParticipantResource {
 
-    private static final Logger log = LoggerFactory.getLogger(AnswerResource.class);
+    private static final Logger log = LoggerFactory.getLogger(ParticipantResource.class);
 
-    private static final String ENTITY_NAME = "answer";
+    private static final String ENTITY_NAME = "participant";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final AnswerRepository answerRepository;
 
-    public AnswerResource(AnswerRepository answerRepository) {
+    public ParticipantResource(AnswerRepository answerRepository) {
         this.answerRepository = answerRepository;
     }
 
@@ -55,14 +55,14 @@ public class AnswerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
     public ResponseEntity<Answer> createAnswer(@Valid @RequestBody Answer answer) throws URISyntaxException {
         log.debug("REST request to save Answer : {}", answer);
         if (answer.getId() != null) {
             throw new BadRequestAlertException("A new answer cannot already have an ID", ENTITY_NAME, "idexists");
         }
         answer = answerRepository.save(answer);
-        return ResponseEntity.created(new URI("/api/answers/" + answer.getId()))
+        return ResponseEntity.created(new URI("/api/participants/" + answer.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, answer.getId().toString()))
             .body(answer);
     }
@@ -78,7 +78,7 @@ public class AnswerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
     public ResponseEntity<Answer> updateAnswer(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody Answer answer
@@ -113,7 +113,7 @@ public class AnswerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
     public ResponseEntity<Answer> partialUpdateAnswer(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Answer answer
@@ -158,7 +158,7 @@ public class AnswerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of answers in body.
      */
     @GetMapping("")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
     public ResponseEntity<List<Answer>> getAllAnswers(
         @org.springdoc.core.annotations.ParameterObject Pageable pageable,
         @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
@@ -181,7 +181,7 @@ public class AnswerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the answer, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
     public ResponseEntity<Answer> getAnswer(@PathVariable("id") Long id) {
         log.debug("REST request to get Answer : {}", id);
         Optional<Answer> answer = answerRepository.findOneWithEagerRelationships(id);
@@ -195,7 +195,7 @@ public class AnswerResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
     public ResponseEntity<Void> deleteAnswer(@PathVariable("id") Long id) {
         log.debug("REST request to delete Answer : {}", id);
         answerRepository.deleteById(id);

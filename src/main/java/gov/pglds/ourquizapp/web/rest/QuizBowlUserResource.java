@@ -3,6 +3,7 @@ package gov.pglds.ourquizapp.web.rest;
 import gov.pglds.ourquizapp.domain.QuizBowlUser;
 import gov.pglds.ourquizapp.repository.QuizBowlUserRepository;
 import gov.pglds.ourquizapp.repository.UserRepository;
+import gov.pglds.ourquizapp.security.AuthoritiesConstants;
 import gov.pglds.ourquizapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -50,6 +52,7 @@ public class QuizBowlUserResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<QuizBowlUser> createQuizBowlUser(@RequestBody QuizBowlUser quizBowlUser) throws URISyntaxException {
         log.debug("REST request to save QuizBowlUser : {}", quizBowlUser);
         if (quizBowlUser.getId() != null) {
@@ -77,6 +80,7 @@ public class QuizBowlUserResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<QuizBowlUser> updateQuizBowlUser(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody QuizBowlUser quizBowlUser
@@ -174,6 +178,7 @@ public class QuizBowlUserResource {
      */
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<QuizBowlUser> getQuizBowlUser(@PathVariable("id") Long id) {
         log.debug("REST request to get QuizBowlUser : {}", id);
         Optional<QuizBowlUser> quizBowlUser = quizBowlUserRepository.findOneWithEagerRelationships(id);
@@ -187,6 +192,7 @@ public class QuizBowlUserResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteQuizBowlUser(@PathVariable("id") Long id) {
         log.debug("REST request to delete QuizBowlUser : {}", id);
         quizBowlUserRepository.deleteById(id);

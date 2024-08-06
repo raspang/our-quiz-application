@@ -13,6 +13,7 @@ const quizBowlUserRoute: Routes = [
     component: QuizBowlUserComponent,
     data: {
       defaultSort: 'id,' + ASC,
+      authorities: ['ROLE_ADMIN'],
     },
     canActivate: [UserRouteAccessService],
   },
@@ -22,6 +23,9 @@ const quizBowlUserRoute: Routes = [
     resolve: {
       quizBowlUser: QuizBowlUserResolve,
     },
+    data: {
+      authorities: ['ROLE_ADMIN'],
+    },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -30,6 +34,9 @@ const quizBowlUserRoute: Routes = [
     resolve: {
       quizBowlUser: QuizBowlUserResolve,
     },
+    data: {
+      authorities: ['ROLE_ADMIN'],
+    },
     canActivate: [UserRouteAccessService],
   },
   {
@@ -37,6 +44,9 @@ const quizBowlUserRoute: Routes = [
     component: QuizBowlUserUpdateComponent,
     resolve: {
       quizBowlUser: QuizBowlUserResolve,
+    },
+    data: {
+      authorities: ['ROLE_ADMIN'],
     },
     canActivate: [UserRouteAccessService],
   },
