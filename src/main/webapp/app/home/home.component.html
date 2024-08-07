@@ -4,55 +4,23 @@
   </div>
 
   <div class="col-md-9">
-    <h1 class="display-4"><span>Welcome, Java Hipster!</span> (Our Quiz Bowl Application)</h1>
+    <h1 class="display-4">
+      <span>Welcome, {{ account()!.login }}!</span>
+    </h1>
 
-    <p class="lead">This is your homepage</p>
+    <p class="lead">This is our Quiz Bowl Application</p>
 
-    <div>
-      @if (account() !== null) {
-        <div class="alert alert-success">
-          @if (account()) {
-            <span id="home-logged-message">You are logged in as user &quot;{{ account()!.login }}&quot;.</span>
-          }
-        </div>
-      } @else {
-        <div class="alert alert-warning">
-          <span>If you want to </span>
-          <a class="alert-link" (click)="login()">sign in</a
-          ><span
-            >, you can try the default accounts:<br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;) <br />- User
-            (login=&quot;user&quot; and password=&quot;user&quot;).</span
-          >
-        </div>
-
-        <div class="alert alert-warning">
-          <span>You don&apos;t have an account yet?</span>&nbsp;
-          <a class="alert-link" routerLink="/account/register">Register a new account</a>
-        </div>
-      }
-    </div>
-
-    <p>If you have any question on JHipster:</p>
+    <p>Thank you for your participation. Here are some reminders:</p>
 
     <ul>
-      <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">JHipster homepage</a></li>
       <li>
-        <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster on Stack Overflow</a>
+        Listen to the question presented from the slideshow on the stage. If the speaker starts the timer, you can type your answer and
+        submit it. Once the time is over, the admin account will disable submissions, and you will no longer be able to submit your answer.
       </li>
-      <li>
-        <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
-          >JHipster bug tracker</a
-        >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">JHipster public chat room</a>
-      </li>
-      <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">follow &#64;jhipster on Twitter</a></li>
+      <li>Characters and numbers entered will be accepted in the text form.</li>
+      <li>It will ignore whether the text is in lowercase or uppercase (i.e., it is okay if it is all lowercase or uppercase).</li>
+      <li>Special characters will also be ignored, making the input less strict.</li>
+      <li>If you have any questions, please ask the secretariat.</li>
     </ul>
-
-    <p>
-      <span>If you like JHipster, don&apos;t forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
-    </p>
   </div>
 </div>

@@ -1,6 +1,8 @@
 package gov.pglds.ourquizapp.repository;
 
 import gov.pglds.ourquizapp.domain.Answer;
+import gov.pglds.ourquizapp.domain.Question;
+import gov.pglds.ourquizapp.domain.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -40,4 +42,8 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     @Query("select answer from Answer answer left join fetch answer.question left join fetch answer.user where answer.id =:id")
     Optional<Answer> findOneWithToOneRelationships(@Param("id") Long id);
+
+    Optional<Answer> findByUserAndQuestion(User user, Question question);
+
+    boolean existsByQuestionAndUser(Question question, User user);
 }

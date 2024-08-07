@@ -1,6 +1,7 @@
 package gov.pglds.ourquizapp.repository;
 
 import gov.pglds.ourquizapp.domain.QuizBowlUser;
+import gov.pglds.ourquizapp.domain.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -37,4 +38,6 @@ public interface QuizBowlUserRepository extends JpaRepository<QuizBowlUser, Long
 
     @Query("select quizBowlUser from QuizBowlUser quizBowlUser left join fetch quizBowlUser.user where quizBowlUser.id =:id")
     Optional<QuizBowlUser> findOneWithToOneRelationships(@Param("id") Long id);
+
+    QuizBowlUser findByUser(User user);
 }

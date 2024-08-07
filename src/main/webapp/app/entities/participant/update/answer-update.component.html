@@ -1,10 +1,12 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-answer-heading" data-cy="AnswerCreateUpdateHeading">Create or edit a Answer</h2>
+      <!-- <h2 id="jhi-answer-heading" data-cy="AnswerCreateUpdateHeading">Answer Text</h2> -->
 
       <div>
         <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
 
         @if (editForm.controls.id.value !== null) {
           <div class="mb-3">
@@ -22,6 +24,7 @@
             id="field_answerText"
             data-cy="answerText"
             formControlName="answerText"
+            placeholder="Your answer"
           />
           @if (editForm.get('answerText')!.invalid && (editForm.get('answerText')!.dirty || editForm.get('answerText')!.touched)) {
             <div>
@@ -32,12 +35,12 @@
           }
         </div>
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label class="form-label" for="field_isCorrect">Is Correct</label>
           <input type="checkbox" class="form-check" name="isCorrect" id="field_isCorrect" data-cy="isCorrect" formControlName="isCorrect" />
-        </div>
+        </div> -->
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label class="form-label" for="field_question">Question</label>
           <select
             class="form-control"
@@ -52,9 +55,9 @@
               <option [ngValue]="questionOption">{{ questionOption.number }}</option>
             }
           </select>
-        </div>
+        </div> -->
 
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label class="form-label" for="field_user">User</label>
           <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
             <option [ngValue]="null"></option>
@@ -62,13 +65,13 @@
               <option [ngValue]="userOption">{{ userOption.login }}</option>
             }
           </select>
-        </div>
+        </div>-->
       </div>
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <!-- <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
-        </button>
+        </button> -->
 
         <button
           type="submit"
@@ -77,7 +80,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Submit</span>
         </button>
       </div>
     </form>

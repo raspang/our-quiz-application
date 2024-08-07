@@ -35,17 +35,17 @@ const answerRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
-  // {
-  //   path: 'new',
-  //   component: AnswerUpdateComponent,
-  //   resolve: {
-  //     answer: AnswerResolve,
-  //   },
-  //   data: {
-  //     authorities: ['ROLE_PARTICIPANT'],
-  //   },
-  //   canActivate: [UserRouteAccessService],
-  // },
+  {
+    path: 'new',
+    component: AnswerUpdateComponent,
+    resolve: {
+      answer: AnswerResolve,
+    },
+    data: {
+      authorities: ['ROLE_PARTICIPANT'],
+    },
+    canActivate: [UserRouteAccessService],
+  },
   // {
   //   path: ':id/edit',
   //   component: AnswerUpdateComponent,

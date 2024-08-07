@@ -7,7 +7,7 @@ import { finalize, map } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IQuestion } from 'app/entities/question/question.model';
+// import { IQuestion } from 'app/entities/question/question.model';
 import { QuestionService } from 'app/entities/question/service/question.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
@@ -25,7 +25,7 @@ export class AnswerUpdateComponent implements OnInit {
   isSaving = false;
   answer: IAnswer | null = null;
 
-  questionsSharedCollection: IQuestion[] = [];
+  // questionsSharedCollection: IQuestion[] = [];
   usersSharedCollection: IUser[] = [];
 
   protected answerService = inject(AnswerService);
@@ -37,7 +37,7 @@ export class AnswerUpdateComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: AnswerFormGroup = this.answerFormService.createAnswerFormGroup();
 
-  compareQuestion = (o1: IQuestion | null, o2: IQuestion | null): boolean => this.questionService.compareQuestion(o1, o2);
+  // compareQuestion = (o1: IQuestion | null, o2: IQuestion | null): boolean => this.questionService.compareQuestion(o1, o2);
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
@@ -74,7 +74,7 @@ export class AnswerUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    //this.previousState();
   }
 
   protected onSaveError(): void {
@@ -89,26 +89,26 @@ export class AnswerUpdateComponent implements OnInit {
     this.answer = answer;
     this.answerFormService.resetForm(this.editForm, answer);
 
-    this.questionsSharedCollection = this.questionService.addQuestionToCollectionIfMissing<IQuestion>(
-      this.questionsSharedCollection,
-      answer.question,
-    );
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, answer.user);
+    // this.questionsSharedCollection = this.questionService.addQuestionToCollectionIfMissing<IQuestion>(
+    //   this.questionsSharedCollection,
+    //   answer.question,
+    // );
+    //d this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, answer.user);
   }
 
   protected loadRelationshipsOptions(): void {
-    this.questionService
-      .query()
-      .pipe(map((res: HttpResponse<IQuestion[]>) => res.body ?? []))
-      .pipe(
-        map((questions: IQuestion[]) => this.questionService.addQuestionToCollectionIfMissing<IQuestion>(questions, this.answer?.question)),
-      )
-      .subscribe((questions: IQuestion[]) => (this.questionsSharedCollection = questions));
-
-    this.userService
-      .query()
-      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
-      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.answer?.user)))
-      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+    // this.questionService
+    //   .query()
+    //   .pipe(map((res: HttpResponse<IQuestion[]>) => res.body ?? []))
+    //   .pipe(
+    //     map((questions: IQuestion[]) => this.questionService.addQuestionToCollectionIfMissing<IQuestion>(questions, this.answer?.question)),
+    //   )
+    //   .subscribe((questions: IQuestion[]) => (this.questionsSharedCollection = questions));
+    //   this.userService
+    //     .query()
+    //     .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
+    //     .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.answer?.user)))
+    //     .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+    // }
   }
 }

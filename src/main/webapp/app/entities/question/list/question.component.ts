@@ -38,6 +38,8 @@ export class QuestionComponent implements OnInit {
   questions?: IQuestion[];
   isLoading = false;
 
+  showAnswers: boolean = false;
+
   sortState = sortStateSignal({});
 
   itemsPerPage = ITEMS_PER_PAGE;
@@ -71,6 +73,14 @@ export class QuestionComponent implements OnInit {
 
   loadNextPage(): void {
     this.load();
+  }
+
+  enableQuestion(question: IQuestion): void {
+    this.questionService.enable(question.id).subscribe(() => this.load());
+  }
+
+  toggleShowAnswers(): void {
+    this.showAnswers = !this.showAnswers;
   }
 
   delete(question: IQuestion): void {

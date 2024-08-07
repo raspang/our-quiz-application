@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
-import { ASC } from 'app/config/navigation.constants';
+import { DESC } from 'app/config/navigation.constants';
 import { QuizBowlUserComponent } from './list/quiz-bowl-user.component';
 import { QuizBowlUserDetailComponent } from './detail/quiz-bowl-user-detail.component';
 import { QuizBowlUserUpdateComponent } from './update/quiz-bowl-user-update.component';
@@ -12,8 +12,8 @@ const quizBowlUserRoute: Routes = [
     path: '',
     component: QuizBowlUserComponent,
     data: {
-      defaultSort: 'id,' + ASC,
-      authorities: ['ROLE_ADMIN'],
+      defaultSort: 'score,' + DESC,
+      authorities: ['ROLE_ADMIN', 'ROLE_USER'],
     },
     canActivate: [UserRouteAccessService],
   },

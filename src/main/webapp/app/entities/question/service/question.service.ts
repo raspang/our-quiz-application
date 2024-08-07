@@ -27,6 +27,10 @@ export class QuestionService {
     return this.http.put<IQuestion>(`${this.resourceUrl}/${this.getQuestionIdentifier(question)}`, question, { observe: 'response' });
   }
 
+  enable(id: number): Observable<any> {
+    return this.http.put(`${this.resourceUrl}/${id}/enable`, null);
+  }
+
   partialUpdate(question: PartialUpdateQuestion): Observable<EntityResponseType> {
     return this.http.patch<IQuestion>(`${this.resourceUrl}/${this.getQuestionIdentifier(question)}`, question, { observe: 'response' });
   }

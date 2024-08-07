@@ -103,6 +103,17 @@ public class Answer implements Serializable {
         return this;
     }
 
+    public void checkAndSetCorrectness() {
+        //this.participant.setScore(this.participant.getScore() + this.question.getDifficultyLevel());
+
+        String correctAnswer = this.question.getCorrectAnswer().trim();
+        String userAnswered = this.answerText.trim();
+        correctAnswer = correctAnswer.replaceAll("[^a-zA-Z0-9]", "");
+        userAnswered = userAnswered.replaceAll("[^a-zA-Z0-9]", "");
+
+        this.isCorrect = correctAnswer.equalsIgnoreCase(userAnswered);
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override

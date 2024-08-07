@@ -115,6 +115,7 @@ public class QuizBowlUserResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<QuizBowlUser> partialUpdateQuizBowlUser(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody QuizBowlUser quizBowlUser
@@ -178,7 +179,6 @@ public class QuizBowlUserResource {
      */
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<QuizBowlUser> getQuizBowlUser(@PathVariable("id") Long id) {
         log.debug("REST request to get QuizBowlUser : {}", id);
         Optional<QuizBowlUser> quizBowlUser = quizBowlUserRepository.findOneWithEagerRelationships(id);

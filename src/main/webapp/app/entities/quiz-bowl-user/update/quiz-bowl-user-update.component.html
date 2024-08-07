@@ -14,11 +14,6 @@
         }
 
         <div class="mb-3">
-          <label class="form-label" for="field_score">Score</label>
-          <input type="number" class="form-control" name="score" id="field_score" data-cy="score" formControlName="score" />
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_organization">Organization</label>
           <input
             type="text"
@@ -38,6 +33,11 @@
               <option [ngValue]="userOption">{{ userOption.login }}</option>
             }
           </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_score">Score</label>
+          <input type="number" class="form-control" name="score" id="field_score" data-cy="score" formControlName="score" value="0" />
         </div>
       </div>
 
