@@ -22,5 +22,16 @@
       <li>Special characters will also be ignored, making the input less strict.</li>
       <li>If you have any questions, please ask the secretariat.</li>
     </ul>
+
+    @if (account() !== null) {
+      <div class="alert alert-success">
+        @if (account()) {
+          Click the button:
+          <a class="alert-link" routerLink="/participant">
+            <button>Let's go</button>
+          </a>
+        }
+      </div>
+    }
   </div>
 </div>

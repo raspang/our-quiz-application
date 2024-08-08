@@ -111,7 +111,7 @@ public class ParticipantResource {
             user.orElseThrow(() -> new ParticipantResource.AccountResourceException("Current user login not found"))
         );
         if (alreadySubmitted) {
-            throw new BadRequestAlertException("Salam, you cannot resubmit an answer for this question.", ENTITY_NAME, "alreadyanswered");
+            throw new IllegalArgumentException("Salam, you cannot resubmit an answer for the question. Please wait for the speaker.");
         }
 
         answer.setQuestion(
@@ -123,14 +123,7 @@ public class ParticipantResource {
         answer = answerRepository.save(answer);
 
         QuizBowlUser quizBowlUser = quizBowlUserRepository.findByUser(
-            user.orElseThrow(
-                () ->
-                    new BadRequestAlertException(
-                        "A user in not found in the list of Quiz Bowl Participants",
-                        ENTITY_NAME,
-                        "noenabledquestion"
-                    )
-            )
+            user.orElseThrow(() -> new IllegalArgumentException("A user in NOT found in the list of Quiz Bowl Participants"))
         );
         if (answer.getIsCorrect()) {
             quizBowlUser.setScore(quizBowlUser.getScore() + answer.getQuestion().getDifficultyLevel());
