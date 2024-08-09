@@ -38,6 +38,4 @@ public interface QuizBowlUserRepository extends JpaRepository<QuizBowlUser, Long
 
     @Query("select quizBowlUser from QuizBowlUser quizBowlUser left join fetch quizBowlUser.user where quizBowlUser.id =:id")
     Optional<QuizBowlUser> findOneWithToOneRelationships(@Param("id") Long id);
-
-    QuizBowlUser findByUser(User user);
 }

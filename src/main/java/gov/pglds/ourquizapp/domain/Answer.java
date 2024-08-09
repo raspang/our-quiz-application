@@ -30,6 +30,9 @@ public class Answer implements Serializable {
     @Column(name = "is_correct")
     private Boolean isCorrect;
 
+    @Column(name = "visible")
+    private Boolean visible = false;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
 
@@ -75,6 +78,19 @@ public class Answer implements Serializable {
 
     public void setIsCorrect(Boolean isCorrect) {
         this.isCorrect = isCorrect;
+    }
+
+    public Boolean getVisible() {
+        return this.visible;
+    }
+
+    public Answer visible(Boolean visible) {
+        this.setVisible(visible);
+        return this;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
     }
 
     public Question getQuestion() {
@@ -140,6 +156,7 @@ public class Answer implements Serializable {
             "id=" + getId() +
             ", answerText='" + getAnswerText() + "'" +
             ", isCorrect='" + getIsCorrect() + "'" +
+            ", visible='" + getVisible() + "'" +
             "}";
     }
 }

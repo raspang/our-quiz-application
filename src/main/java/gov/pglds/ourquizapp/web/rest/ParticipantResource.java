@@ -60,7 +60,7 @@ public class ParticipantResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final AnswerRepository answerRepository;
+    private final ParticipantRepository participantAnsRepository;
 
     private final QuestionRepository questionRepository;
 
@@ -69,13 +69,13 @@ public class ParticipantResource {
     private final QuizBowlUserRepository quizBowlUserRepository;
 
     public ParticipantResource(
-        AnswerRepository answerRepository,
+        ParticipantRepository participantAnsRepository,
         QuestionRepository questionRepository,
         UserRepository userRepository,
         QuizBowlUserRepository quizBowlUserRepository
     ) {
         this.questionRepository = questionRepository;
-        this.answerRepository = answerRepository;
+        this.participantAnsRepository = participantAnsRepository;
         this.userRepository = userRepository;
         this.quizBowlUserRepository = quizBowlUserRepository;
     }
@@ -99,19 +99,25 @@ public class ParticipantResource {
             .orElseThrow(() -> new ParticipantResource.AccountResourceException("Current user login not found"));
 
         Optional<User> user = userRepository.findOneByLogin(userLogin);
+        User myUser = user.orElseThrow(() -> new ParticipantResource.AccountResourceException("Current user login not found"));
+
+        Optional<QuizBowlUser> quizBowlUser = quizBowlUserRepository.findOneWithToOneRelationships(myUser.getId());
+        if (quizBowlUser.isEmpty()) {
+            throw new IllegalArgumentException("Please register to the quizBowl table.");
+        }
 
         Optional<Question> question = questionRepository.findFirstByEnableTrue();
 
         if (question.isEmpty()) {
-            throw new IllegalArgumentException("Salam, the question is not yet available or is disabled. Please wait.");
+            throw new IllegalArgumentException("Salaam! The question is not yet available or is disabled. Please wait.");
         }
 
-        boolean alreadySubmitted = answerRepository.existsByQuestionAndUser(
+        boolean alreadySubmitted = participantAnsRepository.existsByQuestionAndUser(
             question.orElseThrow(() -> new BadRequestAlertException("No enabled question found", ENTITY_NAME, "noenabledquestion")),
-            user.orElseThrow(() -> new ParticipantResource.AccountResourceException("Current user login not found"))
+            myUser
         );
         if (alreadySubmitted) {
-            throw new IllegalArgumentException("Salam, you cannot resubmit an answer for the question. Please wait for the speaker.");
+            throw new IllegalArgumentException("Salaam! You cannot resubmit an answer for the question. Please wait for the speaker.");
         }
 
         answer.setQuestion(
@@ -120,14 +126,14 @@ public class ParticipantResource {
         answer.setUser(user.orElseThrow(() -> new ParticipantResource.AccountResourceException("Current user login not found")));
         answer.checkAndSetCorrectness();
 
-        answer = answerRepository.save(answer);
+        answer = participantAnsRepository.save(answer);
 
-        QuizBowlUser quizBowlUser = quizBowlUserRepository.findByUser(
-            user.orElseThrow(() -> new IllegalArgumentException("A user in NOT found in the list of Quiz Bowl Participants"))
-        );
         if (answer.getIsCorrect()) {
-            quizBowlUser.setScore(quizBowlUser.getScore() + answer.getQuestion().getDifficultyLevel());
-            quizBowlUserRepository.save(quizBowlUser);
+            QuizBowlUser myQuizBowlUser = quizBowlUser.orElseThrow(
+                () -> new ParticipantResource.AccountResourceException("Current QuizBowlUser is not found in the list")
+            );
+            myQuizBowlUser.setScore(myQuizBowlUser.getScore() + answer.getQuestion().getDifficultyLevel());
+            quizBowlUserRepository.save(myQuizBowlUser);
         }
 
         return ResponseEntity.created(new URI("/api/participants/" + answer.getId()))
@@ -180,7 +186,7 @@ public class ParticipantResource {
     //        }
     //
     //
-    //        answer = answerRepository.save(answer);
+    //        answer = participantAnsRepository.save(answer);
     //        return ResponseEntity.ok()
     //            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, answer.getId().toString()))
     //            .body(answer);
@@ -197,43 +203,43 @@ public class ParticipantResource {
      * or with status {@code 500 (Internal Server Error)} if the answer couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
-    public ResponseEntity<Answer> partialUpdateAnswer(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Answer answer
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Answer partially : {}, {}", id, answer);
-        if (answer.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, answer.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!answerRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<Answer> result = answerRepository
-            .findById(answer.getId())
-            .map(existingAnswer -> {
-                if (answer.getAnswerText() != null) {
-                    existingAnswer.setAnswerText(answer.getAnswerText());
-                }
-                if (answer.getIsCorrect() != null) {
-                    existingAnswer.setIsCorrect(answer.getIsCorrect());
-                }
-
-                return existingAnswer;
-            })
-            .map(answerRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, answer.getId().toString())
-        );
-    }
+    //    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    //    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
+    //    public ResponseEntity<Answer> partialUpdateAnswer(
+    //        @PathVariable(value = "id", required = false) final Long id,
+    //        @NotNull @RequestBody Answer answer
+    //    ) throws URISyntaxException {
+    //        log.debug("REST request to partial update Answer partially : {}, {}", id, answer);
+    //        if (answer.getId() == null) {
+    //            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+    //        }
+    //        if (!Objects.equals(id, answer.getId())) {
+    //            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+    //        }
+    //
+    //        if (!participantAnsRepository.existsById(id)) {
+    //            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+    //        }
+    //
+    //        Optional<Answer> result = participantAnsRepository
+    //            .findById(answer.getId())
+    //            .map(existingAnswer -> {
+    //                if (answer.getAnswerText() != null) {
+    //                    existingAnswer.setAnswerText(answer.getAnswerText());
+    //                }
+    //                if (answer.getIsCorrect() != null) {
+    //                    existingAnswer.setIsCorrect(answer.getIsCorrect());
+    //                }
+    //
+    //                return existingAnswer;
+    //            })
+    //            .map(participantAnsRepository::save);
+    //
+    //        return ResponseUtil.wrapOrNotFound(
+    //            result,
+    //            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, answer.getId().toString())
+    //        );
+    //    }
 
     /**
      * {@code GET  /answers} : get all the answers.
@@ -242,22 +248,20 @@ public class ParticipantResource {
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of answers in body.
      */
-    //    @GetMapping("")
-    //    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
-    //    public ResponseEntity<List<Answer>> getAllAnswers(
-    //        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
-    //        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
-    //    ) {
-    //        log.debug("REST request to get a page of Answers");
-    //        Page<Answer> page;
-    //        if (eagerload) {
-    //            page = answerRepository.findAllWithEagerRelationships(pageable);
-    //        } else {
-    //            page = answerRepository.findAll(pageable);
-    //        }
-    //        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-    //        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    //    }
+    @GetMapping("")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
+    public ResponseEntity<List<Answer>> getAllAnswers(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
+    ) {
+        log.debug("REST request to get a page of Answers");
+        Page<Answer> page;
+
+        page = participantAnsRepository.findAllWithEagerRelationships(pageable);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 
     /**
      * {@code GET  /answers/:id} : get the "id" answer.
@@ -269,7 +273,7 @@ public class ParticipantResource {
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.PARTICIPANT + "\")")
     public ResponseEntity<Answer> getAnswer(@PathVariable("id") Long id) {
         log.debug("REST request to get Answer : {}", id);
-        Optional<Answer> answer = answerRepository.findOneWithEagerRelationships(id);
+        Optional<Answer> answer = participantAnsRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(answer);
     }
     /**

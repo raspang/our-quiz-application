@@ -1,6 +1,7 @@
 package gov.pglds.ourquizapp.web.rest;
 
 import gov.pglds.ourquizapp.domain.Answer;
+import gov.pglds.ourquizapp.domain.Question;
 import gov.pglds.ourquizapp.repository.AnswerRepository;
 import gov.pglds.ourquizapp.security.AuthoritiesConstants;
 import gov.pglds.ourquizapp.web.rest.errors.BadRequestAlertException;
@@ -65,6 +66,13 @@ public class AnswerResource {
         return ResponseEntity.created(new URI("/api/answers/" + answer.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, answer.getId().toString()))
             .body(answer);
+    }
+
+    @PutMapping("/enable")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Void> enableVisible() {
+        answerRepository.visibleAllAnswers();
+        return ResponseEntity.ok().build();
     }
 
     /**
@@ -138,6 +146,9 @@ public class AnswerResource {
                 }
                 if (answer.getIsCorrect() != null) {
                     existingAnswer.setIsCorrect(answer.getIsCorrect());
+                }
+                if (answer.getVisible() != null) {
+                    existingAnswer.setVisible(answer.getVisible());
                 }
 
                 return existingAnswer;

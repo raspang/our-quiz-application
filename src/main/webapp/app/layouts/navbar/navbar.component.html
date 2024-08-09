@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <span class="navbar-title">OurQuizBowlApplication</span>
+      <span class="navbar-title">OurQuizBowlApp</span>
       <span class="navbar-version">{{ version }}</span>
     </a>
     <a
@@ -40,7 +40,7 @@
             <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
               <span>
                 <fa-icon icon="th-list"></fa-icon>
-                <span>Entities</span>
+                <span>Tables</span>
               </span>
             </a>
             <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
@@ -187,6 +187,19 @@
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
             @if (account() !== null) {
+              <li *jhiHasAnyAuthority="'ROLE_PARTICIPANT'">
+                <a
+                  class="dropdown-item"
+                  routerLink="/participant/my-list-result"
+                  routerLinkActive="active"
+                  (click)="collapseNavbar()"
+                  data-cy="result"
+                >
+                  <fa-icon icon="database" [fixedWidth]="true"></fa-icon>
+                  <span>Results</span>
+                </a>
+              </li>
+
               <li>
                 <a
                   class="dropdown-item"

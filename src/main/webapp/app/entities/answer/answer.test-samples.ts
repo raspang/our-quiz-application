@@ -1,23 +1,25 @@
 import { IAnswer, NewAnswer } from './answer.model';
 
 export const sampleWithRequiredData: IAnswer = {
-  id: 24147,
-  answerText: 'delightfully collar',
+  id: 12001,
+  answerText: 'bland upwardly ravel',
 };
 
 export const sampleWithPartialData: IAnswer = {
-  id: 8292,
-  answerText: 'medium',
+  id: 24211,
+  answerText: 'mmm enfold',
+  isCorrect: false,
 };
 
 export const sampleWithFullData: IAnswer = {
-  id: 11643,
-  answerText: 'detailed grill',
-  isCorrect: true,
+  id: 22901,
+  answerText: 'rightfully',
+  isCorrect: false,
+  visible: false,
 };
 
 export const sampleWithNewData: NewAnswer = {
-  answerText: 'atop',
+  answerText: 'front',
   id: null,
 };
 

@@ -32,6 +32,7 @@
 
   @if (answers && answers.length > 0) {
     <div class="table-responsive table-entities" id="entities">
+      <button (click)="showAnswers()">'Show their results'</button>
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
@@ -39,6 +40,12 @@
               <div class="d-flex">
                 <span>ID</span>
 
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="user.login">
+              <div class="d-flex">
+                <span>User</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -56,18 +63,20 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="visible">
+              <div class="d-flex">
+                <span>Visible</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="question.number">
               <div class="d-flex">
                 <span>Question</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="user.login">
-              <div class="d-flex">
-                <span>User</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
+
             <th scope="col"></th>
           </tr>
         </thead>
@@ -77,20 +86,22 @@
               <td>
                 <a [routerLink]="['/answer', answer.id, 'view']">{{ answer.id }}</a>
               </td>
-              <td>{{ answer.answerText }}</td>
-              <td>
-                {{ answer.isCorrect }}
-              </td>
-              <td>
-                @if (answer.question) {
-                  <div>
-                    <a [routerLink]="['/question', answer.question.id, 'view']">{{ answer.question.number }}</a>
-                  </div>
-                }
-              </td>
               <td>
                 {{ answer.user?.login }}
               </td>
+              <td>{{ answer.answerText }}</td>
+              <td>{{ answer.isCorrect }}</td>
+              <td>{{ answer.visible }}</td>
+              <td>
+                @if (answer.question) {
+                  <div>
+                    <a [routerLink]="['/question', answer.question.id, 'view']"
+                      >{{ answer.question.number }}. Lvl: {{ answer.question.difficultyLevel }}</a
+                    >
+                  </div>
+                }
+              </td>
+
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/answer', answer.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

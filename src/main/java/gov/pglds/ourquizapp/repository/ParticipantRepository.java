@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +16,8 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA repository for the Answer entity.
  */
 @Repository
-public interface AnswerRepository extends JpaRepository<Answer, Long> {
-    @Query("select answer from Answer answer where answer.user.login = ?#{authentication.name}")
+public interface ParticipantRepository extends JpaRepository<Answer, Long> {
+    @Query("select answer from Answer answer where answer.user.login = ?#{authentication.name} and answer.visible = true")
     List<Answer> findByUserIsCurrentUser();
 
     default Optional<Answer> findOneWithEagerRelationships(Long id) {
@@ -32,22 +33,22 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     }
 
     @Query(
-        value = "select answer from Answer answer left join fetch answer.question left join fetch answer.user",
+        value = "select answer from Answer answer left join fetch answer.question left join fetch answer.user where answer.user.login = ?#{authentication.name} and answer.visible = true",
         countQuery = "select count(answer) from Answer answer"
     )
     Page<Answer> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select answer from Answer answer left join fetch answer.question left join fetch answer.user")
+    @Query(
+        "select answer from Answer answer left join fetch answer.question left join fetch answer.user where answer.user.login = ?#{authentication.name} and answer.visible = true"
+    )
     List<Answer> findAllWithToOneRelationships();
 
-    @Query("select answer from Answer answer left join fetch answer.question left join fetch answer.user where answer.id =:id")
+    @Query(
+        "select answer from Answer answer left join fetch answer.question left join fetch answer.user where answer.id =:id and answer.visible = true"
+    )
     Optional<Answer> findOneWithToOneRelationships(@Param("id") Long id);
 
     Optional<Answer> findByUserAndQuestion(User user, Question question);
 
     boolean existsByQuestionAndUser(Question question, User user);
-
-    @Modifying
-    @Query("update Answer a set a.visible = true where a.visible = false")
-    void visibleAllAnswers();
 }

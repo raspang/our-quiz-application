@@ -48,7 +48,8 @@ public class AnswerAsserts {
         assertThat(expected)
             .as("Verify Answer relevant properties")
             .satisfies(e -> assertThat(e.getAnswerText()).as("check answerText").isEqualTo(actual.getAnswerText()))
-            .satisfies(e -> assertThat(e.getIsCorrect()).as("check isCorrect").isEqualTo(actual.getIsCorrect()));
+            .satisfies(e -> assertThat(e.getIsCorrect()).as("check isCorrect").isEqualTo(actual.getIsCorrect()))
+            .satisfies(e -> assertThat(e.getVisible()).as("check visible").isEqualTo(actual.getVisible()));
     }
 
     /**

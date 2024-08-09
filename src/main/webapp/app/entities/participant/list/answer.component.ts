@@ -14,7 +14,6 @@ import { SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigati
 import { ParseLinks } from 'app/core/util/parse-links.service';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { EntityArrayResponseType, AnswerService } from '../service/answer.service';
-import { AnswerDeleteDialogComponent } from '../delete/answer-delete-dialog.component';
 import { IAnswer } from '../answer.model';
 
 @Component({
@@ -71,22 +70,6 @@ export class AnswerComponent implements OnInit {
 
   loadNextPage(): void {
     this.load();
-  }
-
-  showAnswers(): void {
-    this.answerService.enable().subscribe(() => this.load());
-  }
-
-  delete(answer: IAnswer): void {
-    const modalRef = this.modalService.open(AnswerDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.answer = answer;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
-      .pipe(
-        filter(reason => reason === ITEM_DELETED_EVENT),
-        tap(() => this.load()),
-      )
-      .subscribe();
   }
 
   load(): void {

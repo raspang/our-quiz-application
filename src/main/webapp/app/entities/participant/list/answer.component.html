@@ -1,0 +1,110 @@
+<div>
+  <h2 id="page-heading" data-cy="AnswerHeading">
+    <span>Your Results</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <!-- <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-answer"
+        [routerLink]="['/answer/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Create a new Answer</span>
+      </button> -->
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (answers?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span
+        >No results found. This may be because the Admin Account has disabled the results list. However, your results will be displayed
+        after the quiz bowl. Thank you.</span
+      >
+    </div>
+  }
+
+  @if (answers && answers.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <!-- <th scope="col" jhiSortBy="user.login">
+              <div class="d-flex">
+                <span>User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th> -->
+
+            <th scope="col" jhiSortBy="question.number">
+              <div class="d-flex">
+                <span>Question</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+
+            <th scope="col" jhiSortBy="question.difficultyLevel">
+              <div class="d-flex">
+                <span>Difficulty Level</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+
+            <th scope="col" jhiSortBy="answerText">
+              <div class="d-flex">
+                <span>Your Answer</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="isCorrect">
+              <div class="d-flex">
+                <span>Is Correct</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+          @for (answer of answers; track trackId) {
+            <tr data-cy="entityTable">
+              <!-- <td>
+                {{ answer.user?.login }}
+              </td> -->
+
+              <td>
+                @if (answer.question) {
+                  {{ answer.question.number }}. {{ answer.question.questionText }}
+                }
+              </td>
+              <td>
+                @if (answer.question) {
+                  {{ answer.question.difficultyLevel }}
+                }
+              </td>
+              <td>
+                <code>{{ answer.answerText }}</code>
+              </td>
+              <td>{{ answer.isCorrect ? 'Correct' : 'Wrong' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <div class="alert alert-information">
+    Click the quizer button:
+    <a class="alert-link" routerLink="/participant">
+      <button>Back</button>
+    </a>
+  </div>
+</div>

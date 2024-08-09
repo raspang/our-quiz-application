@@ -101,34 +101,6 @@ public class QuestionResource {
             .body(question);
     }
 
-    //    @PutMapping("/{id}/enabled")
-    //    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    //    public ResponseEntity<Question> enableQuestion(
-    //        @PathVariable(value = "id", required = false) final Long id,
-    //        @Valid @RequestBody Question question
-    //    ) throws URISyntaxException {
-    //        log.debug("REST request to update Question : {}, {}", id, question);
-    //        if (question.getId() == null) {
-    //            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-    //        }
-    //        if (!Objects.equals(id, question.getId())) {
-    //            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-    //        }
-    //
-    //        if (!questionRepository.existsById(id)) {
-    //            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-    //        }
-    //
-    //        questionRepository.disableAllQuestions();
-    //        question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid question ID"));
-    //        question.setEnable(true);
-    //        question = questionRepository.save(question);
-    //
-    //        return ResponseEntity.ok()
-    //            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, question.getId().toString()))
-    //            .body(question);
-    //    }
-
     @PutMapping("/{id}/enable")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> enableQuestion(@PathVariable Long id) {

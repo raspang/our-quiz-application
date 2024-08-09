@@ -60,7 +60,7 @@ export class AnswerUpdateComponent implements OnInit {
     this.isSaving = true;
     const answer = this.answerFormService.getAnswer(this.editForm);
     if (answer.id !== null) {
-      this.subscribeToSaveResponse(this.answerService.update(answer));
+      // this.subscribeToSaveResponse(this.answerService.update(answer));
     } else {
       this.subscribeToSaveResponse(this.answerService.create(answer));
     }
@@ -74,7 +74,7 @@ export class AnswerUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    //this.previousState();
+    // this.previousState();
   }
 
   protected onSaveError(): void {
@@ -93,7 +93,7 @@ export class AnswerUpdateComponent implements OnInit {
     //   this.questionsSharedCollection,
     //   answer.question,
     // );
-    //d this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, answer.user);
+    //  this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, answer.user);
   }
 
   protected loadRelationshipsOptions(): void {

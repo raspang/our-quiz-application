@@ -12,6 +12,10 @@
     {
       "fieldName": "isCorrect",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "visible",
+      "fieldType": "Boolean"
     }
   ],
   "name": "Answer",

@@ -27,6 +27,10 @@ export class AnswerService {
     return this.http.put<IAnswer>(`${this.resourceUrl}/${this.getAnswerIdentifier(answer)}`, answer, { observe: 'response' });
   }
 
+  enable(): Observable<any> {
+    return this.http.put(`${this.resourceUrl}/enable`, null);
+  }
+
   partialUpdate(answer: PartialUpdateAnswer): Observable<EntityResponseType> {
     return this.http.patch<IAnswer>(`${this.resourceUrl}/${this.getAnswerIdentifier(answer)}`, answer, { observe: 'response' });
   }

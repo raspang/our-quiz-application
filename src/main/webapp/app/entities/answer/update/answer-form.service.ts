@@ -14,12 +14,13 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type AnswerFormGroupInput = IAnswer | PartialWithRequiredKeyOf<NewAnswer>;
 
-type AnswerFormDefaults = Pick<NewAnswer, 'id' | 'isCorrect'>;
+type AnswerFormDefaults = Pick<NewAnswer, 'id' | 'isCorrect' | 'visible'>;
 
 type AnswerFormGroupContent = {
   id: FormControl<IAnswer['id'] | NewAnswer['id']>;
   answerText: FormControl<IAnswer['answerText']>;
   isCorrect: FormControl<IAnswer['isCorrect']>;
+  visible: FormControl<IAnswer['visible']>;
   question: FormControl<IAnswer['question']>;
   user: FormControl<IAnswer['user']>;
 };
@@ -45,6 +46,7 @@ export class AnswerFormService {
         validators: [Validators.required],
       }),
       isCorrect: new FormControl(answerRawValue.isCorrect),
+      visible: new FormControl(answerRawValue.visible),
       question: new FormControl(answerRawValue.question),
       user: new FormControl(answerRawValue.user),
     });
@@ -68,6 +70,7 @@ export class AnswerFormService {
     return {
       id: null,
       isCorrect: false,
+      visible: false,
     };
   }
 }
