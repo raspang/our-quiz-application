@@ -31,6 +31,7 @@ export class QuizBowlUserFormService {
     const quizBowlUserRawValue = {
       ...this.getFormDefaults(),
       ...quizBowlUser,
+      score: quizBowlUser.score ?? 0, // Initialize score to 0 if it's not provided
     };
     return new FormGroup<QuizBowlUserFormGroupContent>({
       id: new FormControl(

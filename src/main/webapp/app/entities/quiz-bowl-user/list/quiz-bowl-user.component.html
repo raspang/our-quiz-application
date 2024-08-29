@@ -42,13 +42,7 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="score">
-              <div class="d-flex">
-                <span>Score</span>
 
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col" jhiSortBy="organization">
               <div class="d-flex">
                 <span>Organization</span>
@@ -62,20 +56,28 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="score">
+              <div class="d-flex">
+                <span>Score</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          @for (quizBowlUser of quizBowlUsers; track trackId) {
+          @for (quizBowlUser of quizBowlUsers; track trackId; let i = $index) {
             <tr data-cy="entityTable">
               <td>
                 <a [routerLink]="['/quiz-bowl-user', quizBowlUser.id, 'view']">{{ quizBowlUser.id }}</a>
               </td>
-              <td>{{ quizBowlUser.score }}</td>
+
               <td>{{ quizBowlUser.organization }}</td>
               <td>
                 {{ quizBowlUser.user?.login }}
               </td>
+              <td>{{ quizBowlUser.score }}</td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/quiz-bowl-user', quizBowlUser.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

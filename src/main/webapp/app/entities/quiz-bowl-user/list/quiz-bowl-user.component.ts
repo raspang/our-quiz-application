@@ -34,6 +34,9 @@ export class QuizBowlUserComponent implements OnInit {
 
   sortState = sortStateSignal({});
 
+  colors: string[] = ['#FFD700', '#C0C0C0', '#CD7F32']; // Gold, Silver, Bronze for top 3
+  indexNum: number = 0;
+
   public router = inject(Router);
   protected quizBowlUserService = inject(QuizBowlUserService);
   protected activatedRoute = inject(ActivatedRoute);
@@ -54,6 +57,17 @@ export class QuizBowlUserComponent implements OnInit {
         }),
       )
       .subscribe();
+  }
+
+  getRowColor(index: number): string {
+    if (this.indexNum === -1) {
+      return '#FFFFFF';
+    }
+    if (index > 2) {
+      this.indexNum = -1;
+    }
+    this.indexNum = index;
+    return this.colors[this.indexNum]; // Default to white for non-top 3
   }
 
   delete(quizBowlUser: IQuizBowlUser): void {

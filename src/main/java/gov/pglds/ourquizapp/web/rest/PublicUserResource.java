@@ -7,7 +7,10 @@ import java.util.Collections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -45,9 +48,16 @@ public class PublicUserResource {
             return ResponseEntity.badRequest().build();
         }
 
+        //        final Page<UserDTO> page = userService.getAllPublicUsers(pageable);
+        //        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        //        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+
+        // Set a large page size to include all users
+        int pageSize = Integer.MAX_VALUE; // or a specific large number
+        pageable = PageRequest.of(0, pageSize, Sort.by("login").ascending());
+
         final Page<UserDTO> page = userService.getAllPublicUsers(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page.getContent(), HttpStatus.OK);
     }
 
     private boolean onlyContainsAllowedProperties(Pageable pageable) {

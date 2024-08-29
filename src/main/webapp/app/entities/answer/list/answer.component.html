@@ -86,11 +86,11 @@
               <td>
                 <a [routerLink]="['/answer', answer.id, 'view']">{{ answer.id }}</a>
               </td>
-              <td>
+              <td [style.color]="answer.isCorrect ? 'green' : 'red'">
                 {{ answer.user?.login }}
               </td>
-              <td>{{ answer.answerText }}</td>
-              <td>{{ answer.isCorrect }}</td>
+              <td [style.color]="answer.isCorrect ? 'green' : 'red'">{{ answer.answerText }}</td>
+              <td [style.color]="answer.isCorrect ? 'green' : 'red'">{{ answer.isCorrect ? 'Correct' : 'Wrong' }}</td>
               <td>{{ answer.visible }}</td>
               <td>
                 @if (answer.question) {

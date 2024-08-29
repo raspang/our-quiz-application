@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type AnswerFormGroupInput = IAnswer | PartialWithRequiredKeyOf<NewAnswer>;
 
-type AnswerFormDefaults = Pick<NewAnswer, 'id' | 'isCorrect'>;
+type AnswerFormDefaults = Pick<NewAnswer, 'id' | 'isCorrect' | 'answerText'>;
 
 type AnswerFormGroupContent = {
   id: FormControl<IAnswer['id'] | NewAnswer['id']>;
@@ -68,6 +68,7 @@ export class AnswerFormService {
     return {
       id: null,
       isCorrect: false,
+      answerText: null,
     };
   }
 }

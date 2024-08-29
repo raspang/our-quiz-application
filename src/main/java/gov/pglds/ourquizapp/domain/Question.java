@@ -31,7 +31,7 @@ public class Question implements Serializable {
     private Integer difficultyLevel;
 
     @NotNull
-    @Column(name = "question_text", nullable = false)
+    @Column(name = "question_text", nullable = false, length = 500)
     private String questionText;
 
     @NotNull

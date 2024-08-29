@@ -74,7 +74,8 @@ export class AnswerUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    // this.previousState();
+    // this.editForm.get('answerText')?.reset('');
+    this.editForm.reset();
   }
 
   protected onSaveError(): void {

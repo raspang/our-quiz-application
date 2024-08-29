@@ -30,7 +30,7 @@
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         @if (account() !== null) {
           <li
-            *jhiHasAnyAuthority="'ROLE_ADMIN'"
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']"
             ngbDropdown
             class="nav-item dropdown pointer"
             display="dynamic"
@@ -44,7 +44,7 @@
               </span>
             </a>
             <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-              <li>
+              <li *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_USER']">
                 <a
                   class="dropdown-item"
                   routerLink="/quiz-bowl-user"
@@ -56,7 +56,7 @@
                   <span>Quiz Bowl User</span>
                 </a>
               </li>
-              <li>
+              <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
                 <a
                   class="dropdown-item"
                   routerLink="/question"
@@ -68,7 +68,7 @@
                   <span>Question</span>
                 </a>
               </li>
-              <li>
+              <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
                 <a
                   class="dropdown-item"
                   routerLink="/answer"
@@ -195,7 +195,7 @@
                   (click)="collapseNavbar()"
                   data-cy="result"
                 >
-                  <fa-icon icon="database" [fixedWidth]="true"></fa-icon>
+                  <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                   <span>Results</span>
                 </a>
               </li>

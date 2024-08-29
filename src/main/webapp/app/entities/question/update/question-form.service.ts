@@ -33,6 +33,7 @@ export class QuestionFormService {
     const questionRawValue = {
       ...this.getFormDefaults(),
       ...question,
+      difficultyLevel: question.difficultyLevel ?? 1, // Initialize score to 0 if it's not provided
     };
     return new FormGroup<QuestionFormGroupContent>({
       id: new FormControl(
