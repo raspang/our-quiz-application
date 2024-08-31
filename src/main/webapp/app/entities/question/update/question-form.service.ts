@@ -19,10 +19,11 @@ type QuestionFormDefaults = Pick<NewQuestion, 'id' | 'enable'>;
 type QuestionFormGroupContent = {
   id: FormControl<IQuestion['id'] | NewQuestion['id']>;
   number: FormControl<IQuestion['number']>;
-  difficultyLevel: FormControl<IQuestion['difficultyLevel']>;
   questionText: FormControl<IQuestion['questionText']>;
+  difficultyLevel: FormControl<IQuestion['difficultyLevel']>;
   correctAnswer: FormControl<IQuestion['correctAnswer']>;
   enable: FormControl<IQuestion['enable']>;
+  timer: FormControl<IQuestion['timer']>;
 };
 
 export type QuestionFormGroup = FormGroup<QuestionFormGroupContent>;
@@ -33,7 +34,6 @@ export class QuestionFormService {
     const questionRawValue = {
       ...this.getFormDefaults(),
       ...question,
-      difficultyLevel: question.difficultyLevel ?? 1, // Initialize score to 0 if it's not provided
     };
     return new FormGroup<QuestionFormGroupContent>({
       id: new FormControl(
@@ -46,14 +46,15 @@ export class QuestionFormService {
       number: new FormControl(questionRawValue.number, {
         validators: [Validators.required],
       }),
-      difficultyLevel: new FormControl(questionRawValue.difficultyLevel),
       questionText: new FormControl(questionRawValue.questionText, {
         validators: [Validators.required],
       }),
+      difficultyLevel: new FormControl(questionRawValue.difficultyLevel),
       correctAnswer: new FormControl(questionRawValue.correctAnswer, {
         validators: [Validators.required],
       }),
       enable: new FormControl(questionRawValue.enable),
+      timer: new FormControl(questionRawValue.timer),
     });
   }
 

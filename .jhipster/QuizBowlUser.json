@@ -5,12 +5,12 @@
   "applications": "*",
   "fields": [
     {
-      "fieldName": "score",
-      "fieldType": "Integer"
-    },
-    {
       "fieldName": "organization",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "score",
+      "fieldType": "Integer"
     }
   ],
   "name": "QuizBowlUser",

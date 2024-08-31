@@ -53,16 +53,16 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="difficultyLevel">
+            <th scope="col" jhiSortBy="questionText">
               <div class="d-flex">
-                <span>Difficulty Level</span>
+                <span>Question Text</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="questionText">
+            <th scope="col" jhiSortBy="difficultyLevel">
               <div class="d-flex">
-                <span>Question Text</span>
+                <span>Difficulty Level</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -74,6 +74,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="timer">
+              <div class="d-flex">
+                <span>Timer</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="enable">
               <div class="d-flex">
                 <span>Enable</span>
@@ -81,19 +88,22 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+
             <th scope="col"></th>
           </tr>
         </thead>
-        <tbody infinite-scroll (scrolled)="loadNextPage()" [infiniteScrollDisabled]="!hasMorePage()" [infiniteScrollDistance]="0">
+        <tbody>
           @for (question of questions; track trackId) {
             <tr data-cy="entityTable">
               <td>
                 <a [routerLink]="['/question', question.id, 'view']">{{ question.id }}</a>
               </td>
               <td>{{ question.number }}</td>
-              <td>{{ question.difficultyLevel }}</td>
               <td>{{ question.questionText }}</td>
+              <td>{{ question.difficultyLevel }}</td>
               <td *ngIf="showAnswers">{{ question.correctAnswer }}</td>
+
+              <td>{{ question.timer }}</td>
               <td>
                 <input type="radio" name="enabled" [checked]="question.enable" (change)="enableQuestion(question)" />
               </td>
@@ -119,6 +129,25 @@
           }
         </tbody>
       </table>
+    </div>
+  }
+  @if (questions && questions.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
     </div>
   }
 </div>

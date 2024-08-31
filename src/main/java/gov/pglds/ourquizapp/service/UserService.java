@@ -4,10 +4,12 @@ import gov.pglds.ourquizapp.config.Constants;
 import gov.pglds.ourquizapp.domain.Authority;
 import gov.pglds.ourquizapp.domain.User;
 import gov.pglds.ourquizapp.repository.AuthorityRepository;
+import gov.pglds.ourquizapp.repository.QuestionRepository;
 import gov.pglds.ourquizapp.repository.UserRepository;
 import gov.pglds.ourquizapp.security.AuthoritiesConstants;
 import gov.pglds.ourquizapp.security.SecurityUtils;
 import gov.pglds.ourquizapp.service.dto.AdminUserDTO;
+import gov.pglds.ourquizapp.service.dto.QuestionDTO;
 import gov.pglds.ourquizapp.service.dto.UserDTO;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -41,16 +43,20 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
+    private final QuestionRepository questionRepository;
+
     public UserService(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,
-        CacheManager cacheManager
+        CacheManager cacheManager,
+        QuestionRepository questionRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.questionRepository = questionRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -320,5 +326,10 @@ public class UserService {
         if (user.getEmail() != null) {
             Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Page<QuestionDTO> getAllQuestions(Pageable pageable) {
+        return questionRepository.findAll(pageable).map(QuestionDTO::new);
     }
 }

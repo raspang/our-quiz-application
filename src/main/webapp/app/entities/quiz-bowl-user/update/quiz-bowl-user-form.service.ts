@@ -18,8 +18,8 @@ type QuizBowlUserFormDefaults = Pick<NewQuizBowlUser, 'id'>;
 
 type QuizBowlUserFormGroupContent = {
   id: FormControl<IQuizBowlUser['id'] | NewQuizBowlUser['id']>;
-  score: FormControl<IQuizBowlUser['score']>;
   organization: FormControl<IQuizBowlUser['organization']>;
+  score: FormControl<IQuizBowlUser['score']>;
   user: FormControl<IQuizBowlUser['user']>;
 };
 
@@ -31,7 +31,6 @@ export class QuizBowlUserFormService {
     const quizBowlUserRawValue = {
       ...this.getFormDefaults(),
       ...quizBowlUser,
-      score: quizBowlUser.score ?? 0, // Initialize score to 0 if it's not provided
     };
     return new FormGroup<QuizBowlUserFormGroupContent>({
       id: new FormControl(
@@ -41,8 +40,8 @@ export class QuizBowlUserFormService {
           validators: [Validators.required],
         },
       ),
-      score: new FormControl(quizBowlUserRawValue.score),
       organization: new FormControl(quizBowlUserRawValue.organization),
+      score: new FormControl(quizBowlUserRawValue.score),
       user: new FormControl(quizBowlUserRawValue.user),
     });
   }

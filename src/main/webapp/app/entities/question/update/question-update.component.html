@@ -27,18 +27,6 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_difficultyLevel">Difficulty Level</label>
-          <input
-            type="number"
-            class="form-control"
-            name="difficultyLevel"
-            id="field_difficultyLevel"
-            data-cy="difficultyLevel"
-            formControlName="difficultyLevel"
-          />
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_questionText">Question Text</label>
           <input
             type="text"
@@ -55,6 +43,18 @@
               }
             </div>
           }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_difficultyLevel">Difficulty Level</label>
+          <input
+            type="number"
+            class="form-control"
+            name="difficultyLevel"
+            id="field_difficultyLevel"
+            data-cy="difficultyLevel"
+            formControlName="difficultyLevel"
+          />
         </div>
 
         <div class="mb-3">
@@ -79,6 +79,11 @@
         <div class="mb-3">
           <label class="form-label" for="field_enable">Enable</label>
           <input type="checkbox" class="form-check" name="enable" id="field_enable" data-cy="enable" formControlName="enable" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_timer">Timer</label>
+          <input type="number" class="form-control" name="timer" id="field_timer" data-cy="timer" formControlName="timer" />
         </div>
       </div>
 

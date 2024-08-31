@@ -20,8 +20,8 @@ describe('QuizBowlUser Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            score: expect.any(Object),
             organization: expect.any(Object),
+            score: expect.any(Object),
             user: expect.any(Object),
           }),
         );
@@ -33,8 +33,8 @@ describe('QuizBowlUser Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            score: expect.any(Object),
             organization: expect.any(Object),
+            score: expect.any(Object),
             user: expect.any(Object),
           }),
         );

@@ -146,17 +146,20 @@ public class QuestionResource {
                 if (question.getNumber() != null) {
                     existingQuestion.setNumber(question.getNumber());
                 }
-                if (question.getDifficultyLevel() != null) {
-                    existingQuestion.setDifficultyLevel(question.getDifficultyLevel());
-                }
                 if (question.getQuestionText() != null) {
                     existingQuestion.setQuestionText(question.getQuestionText());
+                }
+                if (question.getDifficultyLevel() != null) {
+                    existingQuestion.setDifficultyLevel(question.getDifficultyLevel());
                 }
                 if (question.getCorrectAnswer() != null) {
                     existingQuestion.setCorrectAnswer(question.getCorrectAnswer());
                 }
                 if (question.getEnable() != null) {
                     existingQuestion.setEnable(question.getEnable());
+                }
+                if (question.getTimer() != null) {
+                    existingQuestion.setTimer(question.getTimer());
                 }
 
                 return existingQuestion;

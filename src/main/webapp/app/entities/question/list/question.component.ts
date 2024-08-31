@@ -1,4 +1,4 @@
-import { Component, computed, NgZone, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, NgZone, inject, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router, RouterModule } from '@angular/router';
 import { combineLatest, filter, Observable, Subscription, tap } from 'rxjs';
@@ -7,15 +7,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import SharedModule from 'app/shared/shared.module';
 import { sortStateSignal, SortDirective, SortByDirective, type SortState, SortService } from 'app/shared/sort';
 import { DurationPipe, FormatMediumDatetimePipe, FormatMediumDatePipe } from 'app/shared/date';
+import { ItemCountComponent } from 'app/shared/pagination';
 import { FormsModule } from '@angular/forms';
 
-import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
+import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
 import { SORT, ITEM_DELETED_EVENT, DEFAULT_SORT_DATA } from 'app/config/navigation.constants';
-import { ParseLinks } from 'app/core/util/parse-links.service';
-import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { IQuestion } from '../question.model';
 import { EntityArrayResponseType, QuestionService } from '../service/question.service';
 import { QuestionDeleteDialogComponent } from '../delete/question-delete-dialog.component';
-import { IQuestion } from '../question.model';
 
 @Component({
   standalone: true,
@@ -30,7 +29,7 @@ import { IQuestion } from '../question.model';
     DurationPipe,
     FormatMediumDatetimePipe,
     FormatMediumDatePipe,
-    InfiniteScrollDirective,
+    ItemCountComponent,
   ],
 })
 export class QuestionComponent implements OnInit {
@@ -43,15 +42,13 @@ export class QuestionComponent implements OnInit {
   sortState = sortStateSignal({});
 
   itemsPerPage = ITEMS_PER_PAGE;
-  links: WritableSignal<{ [key: string]: undefined | { [key: string]: string | undefined } }> = signal({});
-  hasMorePage = computed(() => !!this.links().next);
-  isFirstFetch = computed(() => Object.keys(this.links()).length === 0);
+  totalItems = 0;
+  page = 1;
 
   public router = inject(Router);
   protected questionService = inject(QuestionService);
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
-  protected parseLinks = inject(ParseLinks);
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
@@ -61,20 +58,10 @@ export class QuestionComponent implements OnInit {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
       .pipe(
         tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-        tap(() => this.reset()),
         tap(() => this.load()),
       )
       .subscribe();
   }
-
-  reset(): void {
-    this.questions = [];
-  }
-
-  loadNextPage(): void {
-    this.load();
-  }
-
   enableQuestion(question: IQuestion): void {
     this.questionService.enable(question.id).subscribe(() => this.load());
   }
@@ -82,7 +69,6 @@ export class QuestionComponent implements OnInit {
   toggleShowAnswers(): void {
     this.showAnswers = !this.showAnswers;
   }
-
   delete(question: IQuestion): void {
     const modalRef = this.modalService.open(QuestionDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.question = question;
@@ -104,10 +90,16 @@ export class QuestionComponent implements OnInit {
   }
 
   navigateToWithComponentValues(event: SortState): void {
-    this.handleNavigation(event);
+    this.handleNavigation(this.page, event);
+  }
+
+  navigateToPage(page: number): void {
+    this.handleNavigation(page, this.sortState());
   }
 
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
+    const page = params.get(PAGE_HEADER);
+    this.page = +(page ?? 1);
     this.sortState.set(this.sortService.parseSortParam(params.get(SORT) ?? data[DEFAULT_SORT_DATA]));
   }
 
@@ -118,48 +110,30 @@ export class QuestionComponent implements OnInit {
   }
 
   protected fillComponentAttributesFromResponseBody(data: IQuestion[] | null): IQuestion[] {
-    // If there is previous link, data is a infinite scroll pagination content.
-    if (this.links().prev) {
-      const questionsNew = this.questions ?? [];
-      if (data) {
-        for (const d of data) {
-          if (questionsNew.map(op => op.id).indexOf(d.id) === -1) {
-            questionsNew.push(d);
-          }
-        }
-      }
-      return questionsNew;
-    }
     return data ?? [];
   }
 
   protected fillComponentAttributesFromResponseHeader(headers: HttpHeaders): void {
-    const linkHeader = headers.get('link');
-    if (linkHeader) {
-      this.links.set(this.parseLinks.parseAll(linkHeader));
-    } else {
-      this.links.set({});
-    }
+    this.totalItems = Number(headers.get(TOTAL_COUNT_RESPONSE_HEADER));
   }
 
   protected queryBackend(): Observable<EntityArrayResponseType> {
-    this.isLoading = true;
-    const queryObject: any = {
-      size: this.itemsPerPage,
-    };
-    if (this.hasMorePage()) {
-      Object.assign(queryObject, this.links().next);
-    } else if (this.isFirstFetch()) {
-      Object.assign(queryObject, { sort: this.sortService.buildSortParam(this.sortState()) });
-    }
+    const { page } = this;
 
+    this.isLoading = true;
+    const pageToLoad: number = page;
+    const queryObject: any = {
+      page: pageToLoad - 1,
+      size: this.itemsPerPage,
+      sort: this.sortService.buildSortParam(this.sortState()),
+    };
     return this.questionService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
-  protected handleNavigation(sortState: SortState): void {
-    this.links.set({});
-
+  protected handleNavigation(page: number, sortState: SortState): void {
     const queryParamsObj = {
+      page,
+      size: this.itemsPerPage,
       sort: this.sortService.buildSortParam(sortState),
     };
 

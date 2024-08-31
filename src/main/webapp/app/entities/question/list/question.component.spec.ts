@@ -112,24 +112,20 @@ describe('Question Management Component', () => {
     );
   });
 
+  it('should load a page', () => {
+    // WHEN
+    comp.navigateToPage(1);
+
+    // THEN
+    expect(routerNavigateSpy).toHaveBeenCalled();
+  });
+
   it('should calculate the sort attribute for an id', () => {
     // WHEN
     comp.ngOnInit();
 
     // THEN
     expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ sort: ['id,desc'] }));
-  });
-
-  it('should infinite scroll', () => {
-    // GIVEN
-    comp.loadNextPage();
-    comp.loadNextPage();
-    comp.loadNextPage();
-
-    // THEN
-    expect(service.query).toHaveBeenCalledTimes(3);
-    expect(service.query).toHaveBeenNthCalledWith(2, expect.objectContaining({ page: '1' }));
-    expect(service.query).toHaveBeenLastCalledWith(expect.objectContaining({ page: '2' }));
   });
 
   describe('delete', () => {

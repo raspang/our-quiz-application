@@ -135,11 +135,11 @@ public class QuizBowlUserResource {
         Optional<QuizBowlUser> result = quizBowlUserRepository
             .findById(quizBowlUser.getId())
             .map(existingQuizBowlUser -> {
-                if (quizBowlUser.getScore() != null) {
-                    existingQuizBowlUser.setScore(quizBowlUser.getScore());
-                }
                 if (quizBowlUser.getOrganization() != null) {
                     existingQuizBowlUser.setOrganization(quizBowlUser.getOrganization());
+                }
+                if (quizBowlUser.getScore() != null) {
+                    existingQuizBowlUser.setScore(quizBowlUser.getScore());
                 }
 
                 return existingQuizBowlUser;

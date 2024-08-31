@@ -12,17 +12,17 @@ public class QuizBowlUserTestSamples {
     private static final AtomicInteger intCount = new AtomicInteger(random.nextInt() + (2 * Short.MAX_VALUE));
 
     public static QuizBowlUser getQuizBowlUserSample1() {
-        return new QuizBowlUser().id(1L).score(1).organization("organization1");
+        return new QuizBowlUser().id(1L).organization("organization1").score(1);
     }
 
     public static QuizBowlUser getQuizBowlUserSample2() {
-        return new QuizBowlUser().id(2L).score(2).organization("organization2");
+        return new QuizBowlUser().id(2L).organization("organization2").score(2);
     }
 
     public static QuizBowlUser getQuizBowlUserRandomSampleGenerator() {
         return new QuizBowlUser()
             .id(longCount.incrementAndGet())
-            .score(intCount.incrementAndGet())
-            .organization(UUID.randomUUID().toString());
+            .organization(UUID.randomUUID().toString())
+            .score(intCount.incrementAndGet());
     }
 }

@@ -47,6 +47,9 @@ class AnswerResourceIT {
     private static final Boolean DEFAULT_IS_CORRECT = false;
     private static final Boolean UPDATED_IS_CORRECT = true;
 
+    private static final Boolean DEFAULT_VISIBLE = false;
+    private static final Boolean UPDATED_VISIBLE = true;
+
     private static final String ENTITY_API_URL = "/api/answers";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -82,7 +85,7 @@ class AnswerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Answer createEntity(EntityManager em) {
-        Answer answer = new Answer().answerText(DEFAULT_ANSWER_TEXT).isCorrect(DEFAULT_IS_CORRECT);
+        Answer answer = new Answer().answerText(DEFAULT_ANSWER_TEXT).isCorrect(DEFAULT_IS_CORRECT).visible(DEFAULT_VISIBLE);
         return answer;
     }
 
@@ -93,7 +96,7 @@ class AnswerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Answer createUpdatedEntity(EntityManager em) {
-        Answer answer = new Answer().answerText(UPDATED_ANSWER_TEXT).isCorrect(UPDATED_IS_CORRECT);
+        Answer answer = new Answer().answerText(UPDATED_ANSWER_TEXT).isCorrect(UPDATED_IS_CORRECT).visible(UPDATED_VISIBLE);
         return answer;
     }
 
@@ -178,7 +181,8 @@ class AnswerResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(answer.getId().intValue())))
             .andExpect(jsonPath("$.[*].answerText").value(hasItem(DEFAULT_ANSWER_TEXT)))
-            .andExpect(jsonPath("$.[*].isCorrect").value(hasItem(DEFAULT_IS_CORRECT.booleanValue())));
+            .andExpect(jsonPath("$.[*].isCorrect").value(hasItem(DEFAULT_IS_CORRECT.booleanValue())))
+            .andExpect(jsonPath("$.[*].visible").value(hasItem(DEFAULT_VISIBLE.booleanValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -211,7 +215,8 @@ class AnswerResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(answer.getId().intValue()))
             .andExpect(jsonPath("$.answerText").value(DEFAULT_ANSWER_TEXT))
-            .andExpect(jsonPath("$.isCorrect").value(DEFAULT_IS_CORRECT.booleanValue()));
+            .andExpect(jsonPath("$.isCorrect").value(DEFAULT_IS_CORRECT.booleanValue()))
+            .andExpect(jsonPath("$.visible").value(DEFAULT_VISIBLE.booleanValue()));
     }
 
     @Test
@@ -233,7 +238,7 @@ class AnswerResourceIT {
         Answer updatedAnswer = answerRepository.findById(answer.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedAnswer are not directly saved in db
         em.detach(updatedAnswer);
-        updatedAnswer.answerText(UPDATED_ANSWER_TEXT).isCorrect(UPDATED_IS_CORRECT);
+        updatedAnswer.answerText(UPDATED_ANSWER_TEXT).isCorrect(UPDATED_IS_CORRECT).visible(UPDATED_VISIBLE);
 
         restAnswerMockMvc
             .perform(
@@ -309,7 +314,7 @@ class AnswerResourceIT {
         Answer partialUpdatedAnswer = new Answer();
         partialUpdatedAnswer.setId(answer.getId());
 
-        partialUpdatedAnswer.isCorrect(UPDATED_IS_CORRECT);
+        partialUpdatedAnswer.answerText(UPDATED_ANSWER_TEXT);
 
         restAnswerMockMvc
             .perform(
@@ -337,7 +342,7 @@ class AnswerResourceIT {
         Answer partialUpdatedAnswer = new Answer();
         partialUpdatedAnswer.setId(answer.getId());
 
-        partialUpdatedAnswer.answerText(UPDATED_ANSWER_TEXT).isCorrect(UPDATED_IS_CORRECT);
+        partialUpdatedAnswer.answerText(UPDATED_ANSWER_TEXT).isCorrect(UPDATED_IS_CORRECT).visible(UPDATED_VISIBLE);
 
         restAnswerMockMvc
             .perform(

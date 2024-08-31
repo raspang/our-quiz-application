@@ -2,8 +2,8 @@ import { IUser } from 'app/entities/user/user.model';
 
 export interface IQuizBowlUser {
   id: number;
-  score?: number | null;
   organization?: string | null;
+  score?: number | null;
   user?: Pick<IUser, 'id' | 'login'> | null;
 }
 

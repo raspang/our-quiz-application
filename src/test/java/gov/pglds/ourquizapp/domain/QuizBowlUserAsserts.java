@@ -58,8 +58,8 @@ public class QuizBowlUserAsserts {
     public static void assertQuizBowlUserUpdatableFieldsEquals(QuizBowlUser expected, QuizBowlUser actual) {
         assertThat(expected)
             .as("Verify QuizBowlUser relevant properties")
-            .satisfies(e -> assertThat(e.getScore()).as("check score").isEqualTo(actual.getScore()))
-            .satisfies(e -> assertThat(e.getOrganization()).as("check organization").isEqualTo(actual.getOrganization()));
+            .satisfies(e -> assertThat(e.getOrganization()).as("check organization").isEqualTo(actual.getOrganization()))
+            .satisfies(e -> assertThat(e.getScore()).as("check score").isEqualTo(actual.getScore()));
     }
 
     /**

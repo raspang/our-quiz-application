@@ -27,12 +27,12 @@ public class Question implements Serializable {
     @Column(name = "number", nullable = false)
     private Integer number;
 
-    @Column(name = "difficulty_level")
-    private Integer difficultyLevel;
-
     @NotNull
     @Column(name = "question_text", nullable = false, length = 500)
     private String questionText;
+
+    @Column(name = "difficulty_level")
+    private Integer difficultyLevel;
 
     @NotNull
     @Column(name = "correct_answer", nullable = false)
@@ -40,6 +40,9 @@ public class Question implements Serializable {
 
     @Column(name = "enable")
     private Boolean enable;
+
+    @Column(name = "timer")
+    private Integer timer = 30;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -69,19 +72,6 @@ public class Question implements Serializable {
         this.number = number;
     }
 
-    public Integer getDifficultyLevel() {
-        return this.difficultyLevel;
-    }
-
-    public Question difficultyLevel(Integer difficultyLevel) {
-        this.setDifficultyLevel(difficultyLevel);
-        return this;
-    }
-
-    public void setDifficultyLevel(Integer difficultyLevel) {
-        this.difficultyLevel = difficultyLevel;
-    }
-
     public String getQuestionText() {
         return this.questionText;
     }
@@ -93,6 +83,19 @@ public class Question implements Serializable {
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
+    }
+
+    public Integer getDifficultyLevel() {
+        return this.difficultyLevel;
+    }
+
+    public Question difficultyLevel(Integer difficultyLevel) {
+        this.setDifficultyLevel(difficultyLevel);
+        return this;
+    }
+
+    public void setDifficultyLevel(Integer difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
     }
 
     public String getCorrectAnswer() {
@@ -121,6 +124,19 @@ public class Question implements Serializable {
         this.enable = enable;
     }
 
+    public Integer getTimer() {
+        return this.timer;
+    }
+
+    public Question timer(Integer timer) {
+        this.setTimer(timer);
+        return this;
+    }
+
+    public void setTimer(Integer timer) {
+        this.timer = timer;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -146,10 +162,11 @@ public class Question implements Serializable {
         return "Question{" +
             "id=" + getId() +
             ", number=" + getNumber() +
-            ", difficultyLevel=" + getDifficultyLevel() +
             ", questionText='" + getQuestionText() + "'" +
+            ", difficultyLevel=" + getDifficultyLevel() +
             ", correctAnswer='" + getCorrectAnswer() + "'" +
             ", enable='" + getEnable() + "'" +
+            ", timer=" + getTimer() +
             "}";
     }
 }

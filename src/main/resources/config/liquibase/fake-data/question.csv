@@ -1,11 +1,11 @@
-id;number;difficulty_level;question_text;correct_answer;enable
-1;24464;9835;around vice fooey;edible;true
-2;17690;12102;next;but;false
-3;8940;21273;terribly certainly obediently;jealous guillotine;false
-4;17364;14804;peanut;if link;true
-5;16284;15526;but who;fruitful scientist whenever;false
-6;6121;21600;pottery like instead;rage and petticoat;false
-7;9476;4835;stabilize emu;near the;false
-8;19457;289;ouch catalog;until absent fishtail;true
-9;29583;23061;loving deceive;oh aw zowie;true
-10;3143;22939;oh winged across;boohoo spherical yum;false
+id;number;question_text;difficulty_level;correct_answer;enable;timer
+1;24464;ugh;6560;cluttered;false;17542
+2;16713;relish and;18174;stab zowie;true;21273
+3;22712;hydrocarb when;29228;luxurious;false;23960
+4;14964;instead next;12675;bare aboard;true;27045
+5;26447;pelican procure;8138;weakly;true;17077
+6;10448;whoa;21559;opposite;false;16350
+7;16825;eek;725;off off grotesque;true;18379
+8;1418;regular for supposing;24983;drat;true;19383
+9;11075;ornate seaweed pro;8597;distinguish;false;10244
+10;13202;till;3770;conservative ecstatic;false;15540

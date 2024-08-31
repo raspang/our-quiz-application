@@ -43,11 +43,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class QuizBowlUserResourceIT {
 
-    private static final Integer DEFAULT_SCORE = 1;
-    private static final Integer UPDATED_SCORE = 2;
-
     private static final String DEFAULT_ORGANIZATION = "AAAAAAAAAA";
     private static final String UPDATED_ORGANIZATION = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_SCORE = 1;
+    private static final Integer UPDATED_SCORE = 2;
 
     private static final String ENTITY_API_URL = "/api/quiz-bowl-users";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -84,7 +84,7 @@ class QuizBowlUserResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static QuizBowlUser createEntity(EntityManager em) {
-        QuizBowlUser quizBowlUser = new QuizBowlUser().score(DEFAULT_SCORE).organization(DEFAULT_ORGANIZATION);
+        QuizBowlUser quizBowlUser = new QuizBowlUser().organization(DEFAULT_ORGANIZATION).score(DEFAULT_SCORE);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -100,7 +100,7 @@ class QuizBowlUserResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static QuizBowlUser createUpdatedEntity(EntityManager em) {
-        QuizBowlUser quizBowlUser = new QuizBowlUser().score(UPDATED_SCORE).organization(UPDATED_ORGANIZATION);
+        QuizBowlUser quizBowlUser = new QuizBowlUser().organization(UPDATED_ORGANIZATION).score(UPDATED_SCORE);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -214,8 +214,8 @@ class QuizBowlUserResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(quizBowlUser.getId().intValue())))
-            .andExpect(jsonPath("$.[*].score").value(hasItem(DEFAULT_SCORE)))
-            .andExpect(jsonPath("$.[*].organization").value(hasItem(DEFAULT_ORGANIZATION)));
+            .andExpect(jsonPath("$.[*].organization").value(hasItem(DEFAULT_ORGANIZATION)))
+            .andExpect(jsonPath("$.[*].score").value(hasItem(DEFAULT_SCORE)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -247,8 +247,8 @@ class QuizBowlUserResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(quizBowlUser.getId().intValue()))
-            .andExpect(jsonPath("$.score").value(DEFAULT_SCORE))
-            .andExpect(jsonPath("$.organization").value(DEFAULT_ORGANIZATION));
+            .andExpect(jsonPath("$.organization").value(DEFAULT_ORGANIZATION))
+            .andExpect(jsonPath("$.score").value(DEFAULT_SCORE));
     }
 
     @Test
@@ -270,7 +270,7 @@ class QuizBowlUserResourceIT {
         QuizBowlUser updatedQuizBowlUser = quizBowlUserRepository.findById(quizBowlUser.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedQuizBowlUser are not directly saved in db
         em.detach(updatedQuizBowlUser);
-        updatedQuizBowlUser.score(UPDATED_SCORE).organization(UPDATED_ORGANIZATION);
+        updatedQuizBowlUser.organization(UPDATED_ORGANIZATION).score(UPDATED_SCORE);
 
         restQuizBowlUserMockMvc
             .perform(
@@ -379,7 +379,7 @@ class QuizBowlUserResourceIT {
         QuizBowlUser partialUpdatedQuizBowlUser = new QuizBowlUser();
         partialUpdatedQuizBowlUser.setId(quizBowlUser.getId());
 
-        partialUpdatedQuizBowlUser.score(UPDATED_SCORE).organization(UPDATED_ORGANIZATION);
+        partialUpdatedQuizBowlUser.organization(UPDATED_ORGANIZATION).score(UPDATED_SCORE);
 
         restQuizBowlUserMockMvc
             .perform(

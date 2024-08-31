@@ -1,20 +1,22 @@
 
 entity QuizBowlUser {
-  score Integer,
-  organization String
+  organization String,
+  score Integer
 }
 
 entity Question {
   number Integer required,
-  difficultyLevel Integer,
   questionText String required,
+  difficultyLevel Integer,
   correctAnswer String required,
-  enable Boolean
+  enable Boolean,
+  timer Integer,
 }
 
 entity Answer {
   answerText String required,
   isCorrect Boolean,
+  visible Boolean
 }
 relationship OneToOne {
   QuizBowlUser{user(login)} to @OnDelete("CASCADE") @Id User with builtInEntity
@@ -25,4 +27,4 @@ relationship ManyToOne {
 }
 
 
-paginate Question, Answer with infinite-scroll
+paginate Question, Answer with pagination

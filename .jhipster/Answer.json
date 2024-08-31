@@ -19,7 +19,7 @@
     }
   ],
   "name": "Answer",
-  "pagination": "infinite-scroll",
+  "pagination": "pagination",
   "relationships": [
     {
       "otherEntityField": "number",

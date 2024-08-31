@@ -1,7 +1,6 @@
 package gov.pglds.ourquizapp.repository;
 
 import gov.pglds.ourquizapp.domain.QuizBowlUser;
-import gov.pglds.ourquizapp.domain.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

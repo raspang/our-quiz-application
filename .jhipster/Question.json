@@ -10,13 +10,13 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "difficultyLevel",
-      "fieldType": "Integer"
-    },
-    {
       "fieldName": "questionText",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "difficultyLevel",
+      "fieldType": "Integer"
     },
     {
       "fieldName": "correctAnswer",
@@ -26,10 +26,14 @@
     {
       "fieldName": "enable",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "timer",
+      "fieldType": "Integer"
     }
   ],
   "name": "Question",
-  "pagination": "infinite-scroll",
+  "pagination": "pagination",
   "relationships": [],
   "searchEngine": "no"
 }

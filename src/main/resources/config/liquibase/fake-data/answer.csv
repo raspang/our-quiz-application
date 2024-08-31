@@ -1,8 +1,8 @@
 id;answer_text;is_correct;visible
 1;psst board dearly;true;false
-2;deselect;true;false
-3;within;true;false
-4;unless plump closely;false;false
+2;deselect;true;true
+3;within;true;true
+4;unless plump closely;false;true
 5;parrot because;false;true
 6;blah bloom;true;false
 7;whether pfft while;false;false

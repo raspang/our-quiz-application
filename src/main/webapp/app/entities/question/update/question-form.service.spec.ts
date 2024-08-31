@@ -21,10 +21,11 @@ describe('Question Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             number: expect.any(Object),
-            difficultyLevel: expect.any(Object),
             questionText: expect.any(Object),
+            difficultyLevel: expect.any(Object),
             correctAnswer: expect.any(Object),
             enable: expect.any(Object),
+            timer: expect.any(Object),
           }),
         );
       });
@@ -36,10 +37,11 @@ describe('Question Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             number: expect.any(Object),
-            difficultyLevel: expect.any(Object),
             questionText: expect.any(Object),
+            difficultyLevel: expect.any(Object),
             correctAnswer: expect.any(Object),
             enable: expect.any(Object),
+            timer: expect.any(Object),
           }),
         );
       });

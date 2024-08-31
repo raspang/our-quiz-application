@@ -20,11 +20,11 @@ public class QuizBowlUser implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "score")
-    private Integer score;
-
     @Column(name = "organization")
     private String organization;
+
+    @Column(name = "score")
+    private Integer score;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
@@ -46,19 +46,6 @@ public class QuizBowlUser implements Serializable {
         this.id = id;
     }
 
-    public Integer getScore() {
-        return this.score;
-    }
-
-    public QuizBowlUser score(Integer score) {
-        this.setScore(score);
-        return this;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
     public String getOrganization() {
         return this.organization;
     }
@@ -70,6 +57,19 @@ public class QuizBowlUser implements Serializable {
 
     public void setOrganization(String organization) {
         this.organization = organization;
+    }
+
+    public Integer getScore() {
+        return this.score;
+    }
+
+    public QuizBowlUser score(Integer score) {
+        this.setScore(score);
+        return this;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public User getUser() {
@@ -109,8 +109,8 @@ public class QuizBowlUser implements Serializable {
     public String toString() {
         return "QuizBowlUser{" +
             "id=" + getId() +
-            ", score=" + getScore() +
             ", organization='" + getOrganization() + "'" +
+            ", score=" + getScore() +
             "}";
     }
 }
