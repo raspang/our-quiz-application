@@ -78,12 +78,15 @@
 
         <div class="mb-3">
           <label class="form-label" for="field_enable">Enable</label>
-          <input type="checkbox" class="form-check" name="enable" id="field_enable" data-cy="enable" formControlName="enable" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_timer">Timer</label>
-          <input type="number" class="form-control" name="timer" id="field_timer" data-cy="timer" formControlName="timer" />
+          <input
+            type="checkbox"
+            class="form-check"
+            name="enable"
+            id="field_enable"
+            data-cy="enable"
+            formControlName="enable"
+            [disabled]="true"
+          />
         </div>
       </div>
 

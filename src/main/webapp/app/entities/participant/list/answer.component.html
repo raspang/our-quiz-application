@@ -80,7 +80,7 @@
                 {{ answer.user?.login }}
               </td> -->
 
-              <td>
+              <td class="question-cell">
                 @if (answer.question) {
                   {{ answer.question.number }}. {{ answer.question.questionText }}
                 }
@@ -93,7 +93,7 @@
               <td>
                 <code>{{ answer.answerText }}</code>
               </td>
-              <td>{{ answer.isCorrect ? 'Correct' : 'Wrong' }}</td>
+              <td [style.color]="answer.isCorrect ? 'green' : 'red'">{{ answer.isCorrect ? 'Correct' : 'Wrong' }}</td>
             </tr>
           }
         </tbody>

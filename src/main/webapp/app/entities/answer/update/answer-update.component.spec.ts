@@ -53,10 +53,10 @@ describe('Answer Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Question query and add missing value', () => {
       const answer: IAnswer = { id: 456 };
-      const question: IQuestion = { id: 8707 };
+      const question: IQuestion = { id: 3467 };
       answer.question = question;
 
-      const questionCollection: IQuestion[] = [{ id: 12871 }];
+      const questionCollection: IQuestion[] = [{ id: 9223 }];
       jest.spyOn(questionService, 'query').mockReturnValue(of(new HttpResponse({ body: questionCollection })));
       const additionalQuestions = [question];
       const expectedCollection: IQuestion[] = [...additionalQuestions, ...questionCollection];
@@ -97,7 +97,7 @@ describe('Answer Management Update Component', () => {
 
     it('Should update editForm', () => {
       const answer: IAnswer = { id: 456 };
-      const question: IQuestion = { id: 4738 };
+      const question: IQuestion = { id: 4478 };
       answer.question = question;
       const user: IUser = { id: 8542 };
       answer.user = user;

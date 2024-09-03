@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    title: 'home.title',
+    title: 'Quiz App-LDS',
   },
   {
     path: '',

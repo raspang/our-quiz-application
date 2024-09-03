@@ -64,6 +64,7 @@ export class QuestionComponent implements OnInit {
   }
   enableQuestion(question: IQuestion): void {
     this.questionService.enable(question.id).subscribe(() => this.load());
+    question.enable = !question.enable;
   }
 
   toggleShowAnswers(): void {

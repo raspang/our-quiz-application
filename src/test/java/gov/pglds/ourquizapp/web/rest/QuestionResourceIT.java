@@ -47,9 +47,6 @@ class QuestionResourceIT {
     private static final Boolean DEFAULT_ENABLE = false;
     private static final Boolean UPDATED_ENABLE = true;
 
-    private static final Integer DEFAULT_TIMER = 1;
-    private static final Integer UPDATED_TIMER = 2;
-
     private static final String ENTITY_API_URL = "/api/questions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -84,8 +81,7 @@ class QuestionResourceIT {
             .questionText(DEFAULT_QUESTION_TEXT)
             .difficultyLevel(DEFAULT_DIFFICULTY_LEVEL)
             .correctAnswer(DEFAULT_CORRECT_ANSWER)
-            .enable(DEFAULT_ENABLE)
-            .timer(DEFAULT_TIMER);
+            .enable(DEFAULT_ENABLE);
         return question;
     }
 
@@ -101,8 +97,7 @@ class QuestionResourceIT {
             .questionText(UPDATED_QUESTION_TEXT)
             .difficultyLevel(UPDATED_DIFFICULTY_LEVEL)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
-            .enable(UPDATED_ENABLE)
-            .timer(UPDATED_TIMER);
+            .enable(UPDATED_ENABLE);
         return question;
     }
 
@@ -222,8 +217,7 @@ class QuestionResourceIT {
             .andExpect(jsonPath("$.[*].questionText").value(hasItem(DEFAULT_QUESTION_TEXT)))
             .andExpect(jsonPath("$.[*].difficultyLevel").value(hasItem(DEFAULT_DIFFICULTY_LEVEL)))
             .andExpect(jsonPath("$.[*].correctAnswer").value(hasItem(DEFAULT_CORRECT_ANSWER)))
-            .andExpect(jsonPath("$.[*].enable").value(hasItem(DEFAULT_ENABLE.booleanValue())))
-            .andExpect(jsonPath("$.[*].timer").value(hasItem(DEFAULT_TIMER)));
+            .andExpect(jsonPath("$.[*].enable").value(hasItem(DEFAULT_ENABLE.booleanValue())));
     }
 
     @Test
@@ -242,8 +236,7 @@ class QuestionResourceIT {
             .andExpect(jsonPath("$.questionText").value(DEFAULT_QUESTION_TEXT))
             .andExpect(jsonPath("$.difficultyLevel").value(DEFAULT_DIFFICULTY_LEVEL))
             .andExpect(jsonPath("$.correctAnswer").value(DEFAULT_CORRECT_ANSWER))
-            .andExpect(jsonPath("$.enable").value(DEFAULT_ENABLE.booleanValue()))
-            .andExpect(jsonPath("$.timer").value(DEFAULT_TIMER));
+            .andExpect(jsonPath("$.enable").value(DEFAULT_ENABLE.booleanValue()));
     }
 
     @Test
@@ -270,8 +263,7 @@ class QuestionResourceIT {
             .questionText(UPDATED_QUESTION_TEXT)
             .difficultyLevel(UPDATED_DIFFICULTY_LEVEL)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
-            .enable(UPDATED_ENABLE)
-            .timer(UPDATED_TIMER);
+            .enable(UPDATED_ENABLE);
 
         restQuestionMockMvc
             .perform(
@@ -353,8 +345,7 @@ class QuestionResourceIT {
             .number(UPDATED_NUMBER)
             .difficultyLevel(UPDATED_DIFFICULTY_LEVEL)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
-            .enable(UPDATED_ENABLE)
-            .timer(UPDATED_TIMER);
+            .enable(UPDATED_ENABLE);
 
         restQuestionMockMvc
             .perform(
@@ -387,8 +378,7 @@ class QuestionResourceIT {
             .questionText(UPDATED_QUESTION_TEXT)
             .difficultyLevel(UPDATED_DIFFICULTY_LEVEL)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
-            .enable(UPDATED_ENABLE)
-            .timer(UPDATED_TIMER);
+            .enable(UPDATED_ENABLE);
 
         restQuestionMockMvc
             .perform(

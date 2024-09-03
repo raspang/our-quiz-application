@@ -6,13 +6,13 @@ export const sampleWithRequiredData: IQuizBowlUser = {
 
 export const sampleWithPartialData: IQuizBowlUser = {
   id: 12875,
-  score: 26572,
+  organization: 'titter psst supernatural',
 };
 
 export const sampleWithFullData: IQuizBowlUser = {
   id: 19126,
-  score: 14228,
-  organization: 'equally crewmate yummy',
+  organization: 'nor unless naturally',
+  score: 341,
 };
 
 export const sampleWithNewData: NewQuizBowlUser = {

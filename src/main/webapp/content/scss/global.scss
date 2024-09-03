@@ -107,7 +107,13 @@ Generic styles
 }
 
 .footer {
+  bottom: 0;
+  width: 100%;
   border-top: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: #f8f9fa; /* Adjust background color as needed */
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow effect */
 }
 
 .hand,
@@ -121,42 +127,80 @@ Custom alerts for notification
 .alerts {
   .alert {
     text-overflow: ellipsis;
+    word-wrap: break-word; /* Allow text to wrap to a new line */
+    word-break: break-all; /* Break long words if necessary */
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+
     pre {
-      background: none;
+      background: transparent;
       border: none;
       font: inherit;
       color: inherit;
       padding: 0;
       margin: 0;
     }
+
     .popover pre {
-      font-size: 10px;
+      font-size: 12px;
     }
   }
+
   .jhi-toast {
     position: fixed;
     width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    word-wrap: break-word; /* Ensure text wraps to a new line */
+    word-break: break-all; /* Break long words if necessary */
+
     &.left {
       left: 5px;
     }
+
     &.right {
       right: 5px;
     }
+
     &.top {
       top: 55px;
     }
+
     &.bottom {
       bottom: 55px;
     }
   }
 }
 
+/* Adjust notification width on larger screens */
 @media screen and (min-width: 480px) {
   .alerts .jhi-toast {
     width: 50%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    font-size: 18px;
   }
 }
 
+/* Adjust notification width on larger screens */
+@media screen and (min-width: 480px) {
+  .alerts .jhi-toast {
+    width: 50%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    font-size: 18px; /* Increase font size for larger screens */
+  }
+}
 /* ==========================================================================
 entity list page css
 ========================================================================== */
@@ -237,3 +281,12 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
   }
 }
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+/* Add this CSS to control the size and text overflow */
+.question-cell {
+  max-width: 200px; /* Set a maximum width */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide the overflow */
+  text-overflow: ellipsis; /* Add an ellipsis (...) to indicate truncated text */
+  font-size: 0.9em; /* Optional: Reduce font size for a smaller appearance */
+}

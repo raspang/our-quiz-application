@@ -104,9 +104,9 @@ public class QuestionResource {
     @PutMapping("/{id}/enable")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> enableQuestion(@PathVariable Long id) {
-        questionRepository.disableAllQuestions();
         Question question = questionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid question ID"));
-        question.setEnable(true);
+        questionRepository.disableAllQuestions();
+        question.setEnable(!question.getEnable());
         questionRepository.save(question);
         return ResponseEntity.ok().build();
     }
@@ -157,9 +157,6 @@ public class QuestionResource {
                 }
                 if (question.getEnable() != null) {
                     existingQuestion.setEnable(question.getEnable());
-                }
-                if (question.getTimer() != null) {
-                    existingQuestion.setTimer(question.getTimer());
                 }
 
                 return existingQuestion;

@@ -41,9 +41,6 @@ public class Question implements Serializable {
     @Column(name = "enable")
     private Boolean enable;
 
-    @Column(name = "timer")
-    private Integer timer = 30;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -124,19 +121,6 @@ public class Question implements Serializable {
         this.enable = enable;
     }
 
-    public Integer getTimer() {
-        return this.timer;
-    }
-
-    public Question timer(Integer timer) {
-        this.setTimer(timer);
-        return this;
-    }
-
-    public void setTimer(Integer timer) {
-        this.timer = timer;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -166,7 +150,6 @@ public class Question implements Serializable {
             ", difficultyLevel=" + getDifficultyLevel() +
             ", correctAnswer='" + getCorrectAnswer() + "'" +
             ", enable='" + getEnable() + "'" +
-            ", timer=" + getTimer() +
             "}";
     }
 }

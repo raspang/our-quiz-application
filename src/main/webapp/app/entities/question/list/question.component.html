@@ -74,13 +74,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="timer">
-              <div class="d-flex">
-                <span>Timer</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col" jhiSortBy="enable">
               <div class="d-flex">
                 <span>Enable</span>
@@ -88,7 +81,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-
             <th scope="col"></th>
           </tr>
         </thead>
@@ -99,14 +91,17 @@
                 <a [routerLink]="['/question', question.id, 'view']">{{ question.id }}</a>
               </td>
               <td>{{ question.number }}</td>
-              <td>{{ question.questionText }}</td>
+              <td class="question-cell">{{ question.questionText }}</td>
               <td>{{ question.difficultyLevel }}</td>
               <td *ngIf="showAnswers">{{ question.correctAnswer }}</td>
 
-              <td>{{ question.timer }}</td>
-              <td>
-                <input type="radio" name="enabled" [checked]="question.enable" (change)="enableQuestion(question)" />
+              <td class="text-center">
+                <label>
+                  <input type="radio" name="enabled" [checked]="question.enable" (click)="enableQuestion(question)" />
+                  {{ question.enable ? 'Enabled' : 'Disabled' }}
+                </label>
               </td>
+
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/question', question.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

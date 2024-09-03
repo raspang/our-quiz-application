@@ -29,9 +29,6 @@
             <column name="enable" type="boolean">
                 <constraints nullable="true" />
             </column>
-            <column name="timer" type="integer">
-                <constraints nullable="true" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -58,7 +55,6 @@
             <column name="difficulty_level" type="numeric"/>
             <column name="correct_answer" type="string"/>
             <column name="enable" type="boolean"/>
-            <column name="timer" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

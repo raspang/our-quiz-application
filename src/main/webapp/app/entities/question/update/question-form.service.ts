@@ -23,7 +23,6 @@ type QuestionFormGroupContent = {
   difficultyLevel: FormControl<IQuestion['difficultyLevel']>;
   correctAnswer: FormControl<IQuestion['correctAnswer']>;
   enable: FormControl<IQuestion['enable']>;
-  timer: FormControl<IQuestion['timer']>;
 };
 
 export type QuestionFormGroup = FormGroup<QuestionFormGroupContent>;
@@ -53,8 +52,7 @@ export class QuestionFormService {
       correctAnswer: new FormControl(questionRawValue.correctAnswer, {
         validators: [Validators.required],
       }),
-      enable: new FormControl(questionRawValue.enable),
-      timer: new FormControl(questionRawValue.timer),
+      enable: new FormControl({ value: false, disabled: true }),
     });
   }
 

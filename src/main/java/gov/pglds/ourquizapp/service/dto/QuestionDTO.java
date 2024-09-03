@@ -17,7 +17,6 @@ public class QuestionDTO implements Serializable {
 
     public QuestionDTO(Question question) {
         this.id = question.getId();
-        this.timer = question.getTimer();
     }
 
     public Long getId() {
@@ -26,13 +25,5 @@ public class QuestionDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getTimer() {
-        return timer;
-    }
-
-    public void setTimer(Integer timer) {
-        this.timer = timer;
     }
 }

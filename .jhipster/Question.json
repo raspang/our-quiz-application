@@ -26,10 +26,6 @@
     {
       "fieldName": "enable",
       "fieldType": "Boolean"
-    },
-    {
-      "fieldName": "timer",
-      "fieldType": "Integer"
     }
   ],
   "name": "Question",

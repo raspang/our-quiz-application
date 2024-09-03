@@ -107,9 +107,15 @@ public class ParticipantResource {
         }
 
         Optional<Question> question = questionRepository.findFirstByEnableTrue();
-
+        Integer numberQuestion = 0;
         if (question.isEmpty()) {
-            throw new IllegalArgumentException("Salaam! The question is not yet available or is disabled. Please wait.");
+            throw new IllegalArgumentException("The next question isn’t available yet. Please wait for the speaker’s announcement.");
+        } else {
+            numberQuestion = question
+                .orElseThrow(
+                    () -> new IllegalArgumentException("The next question isn’t available yet. Please wait for the speaker’s announcement.")
+                )
+                .getNumber();
         }
 
         boolean alreadySubmitted = participantAnsRepository.existsByQuestionAndUser(
@@ -117,7 +123,11 @@ public class ParticipantResource {
             myUser
         );
         if (alreadySubmitted) {
-            throw new IllegalArgumentException("Salaam! You cannot resubmit an answer for the question. Please wait for the speaker.");
+            throw new IllegalArgumentException(
+                "You’ve already submitted your answer for the Question no. " +
+                numberQuestion +
+                ". Please wait for the speaker’s announcement."
+            );
         }
 
         answer.setQuestion(
@@ -137,13 +147,13 @@ public class ParticipantResource {
         }
 
         return ResponseEntity.created(new URI("/api/participants/" + answer.getId()))
-            .headers(createEntityCreationAlert2(applicationName, answer.getAnswerText()))
+            .headers(createEntityCreationAlert2(applicationName, answer.getAnswerText(), answer.getQuestion().getNumber()))
             .body(answer);
     }
 
-    private static HttpHeaders createEntityCreationAlert2(String applicationName, String param) {
-        String message = "Your answer \"" + param + "\" is successfully submitted.";
-        return createAlert2(applicationName, message, param);
+    private static HttpHeaders createEntityCreationAlert2(String applicationName, String param1, Integer param2) {
+        String message = "Your answer \"" + param1 + "\" is successfully submitted for Question no. " + param2 + ".";
+        return createAlert2(applicationName, message, param1);
     }
 
     private static HttpHeaders createAlert2(String applicationName, String message, String param) {

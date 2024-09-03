@@ -4,10 +4,21 @@ Main page styles
 
 .hipster {
   display: inline-block;
-  width: 347px;
-  height: 497px;
+  width: 21.6875rem;
+  height: 31.0625rem;
   background: url('../../content/images/jhipster_family_member_3.svg') no-repeat center top;
   background-size: contain;
+}
+
+/* Ensure the content container takes full height minus the footer */
+.container-fluid {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures full height */
+}
+
+.row.flex-grow-1 {
+  flex-grow: 1; /* Ensures row fills remaining height */
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */

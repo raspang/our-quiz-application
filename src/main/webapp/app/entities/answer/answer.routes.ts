@@ -15,7 +15,6 @@ const answerRoute: Routes = [
       defaultSort: 'id,' + ASC,
       authorities: ['ROLE_ADMIN'],
     },
-
     canActivate: [UserRouteAccessService],
   },
   {
