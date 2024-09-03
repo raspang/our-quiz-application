@@ -109,13 +109,9 @@ public class ParticipantResource {
         Optional<Question> question = questionRepository.findFirstByEnableTrue();
         Integer numberQuestion = 0;
         if (question.isEmpty()) {
-            throw new IllegalArgumentException("The next question isn’t available yet. Please wait for the speaker’s announcement.");
+            throw new IllegalArgumentException("Please wait for the next question.");
         } else {
-            numberQuestion = question
-                .orElseThrow(
-                    () -> new IllegalArgumentException("The next question isn’t available yet. Please wait for the speaker’s announcement.")
-                )
-                .getNumber();
+            numberQuestion = question.orElseThrow(() -> new IllegalArgumentException("Please wait for the next question.")).getNumber();
         }
 
         boolean alreadySubmitted = participantAnsRepository.existsByQuestionAndUser(
@@ -123,11 +119,7 @@ public class ParticipantResource {
             myUser
         );
         if (alreadySubmitted) {
-            throw new IllegalArgumentException(
-                "You’ve already submitted your answer for the Question no. " +
-                numberQuestion +
-                ". Please wait for the speaker’s announcement."
-            );
+            throw new IllegalArgumentException("You’ve already submitted your answer. Please wait for the next question.");
         }
 
         answer.setQuestion(
@@ -152,7 +144,7 @@ public class ParticipantResource {
     }
 
     private static HttpHeaders createEntityCreationAlert2(String applicationName, String param1, Integer param2) {
-        String message = "Your answer \"" + param1 + "\" is successfully submitted for Question no. " + param2 + ".";
+        String message = "Your answer has been successfully submitted.";
         return createAlert2(applicationName, message, param1);
     }
 

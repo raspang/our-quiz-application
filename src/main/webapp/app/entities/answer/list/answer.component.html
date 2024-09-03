@@ -43,6 +43,12 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="question.number">
+              <div class="d-flex">
+                <span>Question</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="user.login">
               <div class="d-flex">
                 <span>User</span>
@@ -70,12 +76,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="question.number">
-              <div class="d-flex">
-                <span>Question</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
 
             <th scope="col"></th>
           </tr>
@@ -86,12 +86,6 @@
               <td>
                 <a [routerLink]="['/answer', answer.id, 'view']">{{ answer.id }}</a>
               </td>
-              <td [style.color]="answer.isCorrect ? 'green' : 'red'">
-                {{ answer.user?.login }}
-              </td>
-              <td [style.color]="answer.isCorrect ? 'green' : 'red'">{{ answer.answerText }}</td>
-              <td [style.color]="answer.isCorrect ? 'green' : 'red'">{{ answer.isCorrect ? 'Correct' : 'Wrong' }}</td>
-              <td>{{ answer.visible }}</td>
               <td>
                 @if (answer.question) {
                   <div>
@@ -101,6 +95,12 @@
                   </div>
                 }
               </td>
+              <td [style.color]="answer.isCorrect ? 'green' : 'red'">
+                {{ answer.user?.login }}
+              </td>
+              <td [style.color]="answer.isCorrect ? 'green' : 'red'">{{ answer.answerText }}</td>
+              <td [style.color]="answer.isCorrect ? 'green' : 'red'">{{ answer.isCorrect ? 'Correct' : 'Wrong' }}</td>
+              <td>{{ answer.visible }}</td>
 
               <td class="text-end">
                 <div class="btn-group">

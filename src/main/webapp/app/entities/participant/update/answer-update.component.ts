@@ -80,6 +80,7 @@ export class AnswerUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     // Api for inheritance.
+    this.editForm.reset();
   }
 
   protected onSaveFinalize(): void {
