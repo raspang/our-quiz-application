@@ -18,13 +18,9 @@
             formControlName="answerText"
             placeholder="Type your answer here"
           />
-          @if (editForm.get('answerText')!.invalid && (editForm.get('answerText')!.dirty || editForm.get('answerText')!.touched)) {
-            <div>
-              @if (editForm.get('answerText')?.errors?.required) {
-                <small class="form-text text-danger">Answer is required.</small>
-              }
-            </div>
-          }
+          <div *ngIf="editForm.get('answerText')!.invalid && (editForm.get('answerText')!.dirty || editForm.get('answerText')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('answerText')?.errors?.required">Answer is required.</small>
+          </div>
         </div>
       </div>
 
@@ -40,5 +36,20 @@
         </button>
       </div>
     </form>
+
+    <div class="d-flex justify-content-between mt-3">
+      <div class="flex-grow-1">
+        <!-- Main content or other components can go here -->
+      </div>
+      <div class="ml-3">
+        <ul class="list-unstyled small">
+          <li *ngFor="let answer of answers">
+            <span [ngClass]="answer.visible ? 'text-success' : 'text-muted'">
+              {{ answer.question?.number }}. {{ answer.visible ? 'Answered' : 'Unanswered' }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

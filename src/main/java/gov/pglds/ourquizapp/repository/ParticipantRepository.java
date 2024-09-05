@@ -39,9 +39,35 @@ public interface ParticipantRepository extends JpaRepository<Answer, Long> {
     Page<Answer> findAllWithToOneRelationships(Pageable pageable);
 
     @Query(
-        "select answer from Answer answer left join fetch answer.question left join fetch answer.user where answer.user.login = ?#{authentication.name} and answer.visible = true"
+        "select answer from Answer answer left join fetch answer.question left join fetch answer.user where answer.user.login = ?#{authentication.name}"
     )
     List<Answer> findAllWithToOneRelationships();
+
+    @Query(
+        "select answer from Answer answer left join fetch answer.question left join fetch answer.user where answer.user.login = ?#{authentication.name}"
+    )
+    List<Answer> findAllTaken();
+
+    @Query(
+        "select q from Question q " +
+        "where q.id not in (" +
+        "   select a.question.id from Answer a " +
+        "   where a.user.login = ?#{authentication.name}" +
+        ")"
+    )
+    List<Question> findUnansweredQuestions();
+
+    @Query(
+        "select distinct q from Question q " +
+        "where q.id not in (" +
+        "   select a.question.id from Answer a " +
+        "   where a.user.login = ?#{authentication.name}" +
+        ") " +
+        "and q.id in (" +
+        "   select a.question.id from Answer a" +
+        ")"
+    )
+    List<Question> findUnansweredQuestionsWithExistingAnswers();
 
     @Query(
         "select answer from Answer answer left join fetch answer.question left join fetch answer.user where answer.id =:id and answer.visible = true"

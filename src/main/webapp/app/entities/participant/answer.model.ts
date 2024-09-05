@@ -7,6 +7,7 @@ export interface IAnswer {
   isCorrect?: boolean | null;
   question?: IQuestion | null;
   user?: Pick<IUser, 'id' | 'login'> | null;
+  visible?: boolean | null;
 }
 
 export type NewAnswer = Omit<IAnswer, 'id'> & { id: null };

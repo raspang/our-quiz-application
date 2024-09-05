@@ -8,7 +8,7 @@ import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IQuestion } from 'app/entities/question/question.model';
-//import { QuestionService } from 'app/entities/question/service/question.service';
+// import { QuestionService } from 'app/entities/question/service/question.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/service/user.service';
 import { AnswerService } from '../service/answer.service';
@@ -24,22 +24,23 @@ import { AnswerFormService, AnswerFormGroup } from './answer-form.service';
 export class AnswerUpdateComponent implements OnInit {
   isSaving = false;
   answer: IAnswer | null = null;
+  answers: IAnswer[] = [];
 
   questionsSharedCollection: IQuestion[] = [];
   usersSharedCollection: IUser[] = [];
 
   protected answerService = inject(AnswerService);
   protected answerFormService = inject(AnswerFormService);
-  //protected questionService = inject(QuestionService);
+  // protected participantService = inject(QuestionService);
   protected userService = inject(UserService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: AnswerFormGroup = this.answerFormService.createAnswerFormGroup();
 
-  // compareQuestion = (o1: IQuestion | null, o2: IQuestion | null): boolean => this.questionService.compareQuestion(o1, o2);
+  // compareQuestion = (o1: IQuestion | null, o2: IQuestion | null): boolean => this.participantService.compareQuestion(o1, o2);
 
-  //compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+  // compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ answer }) => {
@@ -49,7 +50,12 @@ export class AnswerUpdateComponent implements OnInit {
       }
 
       this.loadRelationshipsOptions();
+      this.loadAnswers();
     });
+  }
+
+  loadAnswers(): void {
+    this.answerService.query2().subscribe((res: HttpResponse<IAnswer[]>) => (this.answers = res.body ?? []));
   }
 
   previousState(): void {
@@ -75,11 +81,13 @@ export class AnswerUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     // this.editForm.get('answerText')?.reset('');
+    this.loadAnswers(); // Refresh the list after save
     this.editForm.reset();
   }
 
   protected onSaveError(): void {
     // Api for inheritance.
+    this.loadAnswers(); // Refresh the list after save
     this.editForm.reset();
   }
 
@@ -90,7 +98,7 @@ export class AnswerUpdateComponent implements OnInit {
   protected updateForm(answer: IAnswer): void {
     // this.answer = answer;
     // this.answerFormService.resetForm(this.editForm, answer);
-    // this.questionsSharedCollection = this.questionService.addQuestionToCollectionIfMissing<IQuestion>(
+    // this.questionsSharedCollection = this.participantService.addQuestionToCollectionIfMissing<IQuestion>(
     //   this.questionsSharedCollection,
     //   answer.question,
     // );
@@ -98,11 +106,11 @@ export class AnswerUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    // this.questionService
+    // this.participantService
     //   .query()
     //   .pipe(map((res: HttpResponse<IQuestion[]>) => res.body ?? []))
     //   .pipe(
-    //     map((questions: IQuestion[]) => this.questionService.addQuestionToCollectionIfMissing<IQuestion>(questions, this.answer?.question)),
+    //     map((questions: IQuestion[]) => this.participantService.addQuestionToCollectionIfMissing<IQuestion>(questions, this.answer?.question)),
     //   )
     //   .subscribe((questions: IQuestion[]) => (this.questionsSharedCollection = questions));
     // this.userService

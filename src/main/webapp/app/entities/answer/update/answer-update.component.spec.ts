@@ -20,7 +20,7 @@ describe('Answer Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let answerFormService: AnswerFormService;
   let answerService: AnswerService;
-  let questionService: QuestionService;
+  let participantService: QuestionService;
   let userService: UserService;
 
   beforeEach(() => {
@@ -44,7 +44,7 @@ describe('Answer Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     answerFormService = TestBed.inject(AnswerFormService);
     answerService = TestBed.inject(AnswerService);
-    questionService = TestBed.inject(QuestionService);
+    participantService = TestBed.inject(QuestionService);
     userService = TestBed.inject(UserService);
 
     comp = fixture.componentInstance;
@@ -57,16 +57,16 @@ describe('Answer Management Update Component', () => {
       answer.question = question;
 
       const questionCollection: IQuestion[] = [{ id: 9223 }];
-      jest.spyOn(questionService, 'query').mockReturnValue(of(new HttpResponse({ body: questionCollection })));
+      jest.spyOn(participantService, 'query').mockReturnValue(of(new HttpResponse({ body: questionCollection })));
       const additionalQuestions = [question];
       const expectedCollection: IQuestion[] = [...additionalQuestions, ...questionCollection];
-      jest.spyOn(questionService, 'addQuestionToCollectionIfMissing').mockReturnValue(expectedCollection);
+      jest.spyOn(participantService, 'addQuestionToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ answer });
       comp.ngOnInit();
 
-      expect(questionService.query).toHaveBeenCalled();
-      expect(questionService.addQuestionToCollectionIfMissing).toHaveBeenCalledWith(
+      expect(participantService.query).toHaveBeenCalled();
+      expect(participantService.addQuestionToCollectionIfMissing).toHaveBeenCalledWith(
         questionCollection,
         ...additionalQuestions.map(expect.objectContaining),
       );
@@ -181,12 +181,12 @@ describe('Answer Management Update Component', () => {
 
   describe('Compare relationships', () => {
     describe('compareQuestion', () => {
-      it('Should forward to questionService', () => {
+      it('Should forward to participantService', () => {
         const entity = { id: 123 };
         const entity2 = { id: 456 };
-        jest.spyOn(questionService, 'compareQuestion');
+        jest.spyOn(participantService, 'compareQuestion');
         comp.compareQuestion(entity, entity2);
-        expect(questionService.compareQuestion).toHaveBeenCalledWith(entity, entity2);
+        expect(participantService.compareQuestion).toHaveBeenCalledWith(entity, entity2);
       });
     });
 

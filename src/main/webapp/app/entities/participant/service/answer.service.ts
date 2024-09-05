@@ -23,14 +23,6 @@ export class AnswerService {
     return this.http.post<IAnswer>(this.resourceUrl, answer, { observe: 'response' });
   }
 
-  update(answer: IAnswer): Observable<EntityResponseType> {
-    return this.http.put<IAnswer>(`${this.resourceUrl}/${this.getAnswerIdentifier(answer)}`, answer, { observe: 'response' });
-  }
-
-  partialUpdate(answer: PartialUpdateAnswer): Observable<EntityResponseType> {
-    return this.http.patch<IAnswer>(`${this.resourceUrl}/${this.getAnswerIdentifier(answer)}`, answer, { observe: 'response' });
-  }
-
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IAnswer>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
@@ -40,8 +32,9 @@ export class AnswerService {
     return this.http.get<IAnswer[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  delete(id: number): Observable<HttpResponse<{}>> {
-    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  query2(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IAnswer[]>(`${this.resourceUrl}/taken`, { params: options, observe: 'response' });
   }
 
   getAnswerIdentifier(answer: Pick<IAnswer, 'id'>): number {

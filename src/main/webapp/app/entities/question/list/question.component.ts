@@ -46,13 +46,13 @@ export class QuestionComponent implements OnInit {
   page = 1;
 
   public router = inject(Router);
-  protected questionService = inject(QuestionService);
+  protected participantService = inject(QuestionService);
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
-  trackId = (_index: number, item: IQuestion): number => this.questionService.getQuestionIdentifier(item);
+  trackId = (_index: number, item: IQuestion): number => this.participantService.getQuestionIdentifier(item);
 
   ngOnInit(): void {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
@@ -63,7 +63,7 @@ export class QuestionComponent implements OnInit {
       .subscribe();
   }
   enableQuestion(question: IQuestion): void {
-    this.questionService.enable(question.id).subscribe(() => this.load());
+    this.participantService.enable(question.id).subscribe(() => this.load());
     question.enable = !question.enable;
   }
 
@@ -128,7 +128,7 @@ export class QuestionComponent implements OnInit {
       size: this.itemsPerPage,
       sort: this.sortService.buildSortParam(this.sortState()),
     };
-    return this.questionService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
+    return this.participantService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 
   protected handleNavigation(page: number, sortState: SortState): void {
