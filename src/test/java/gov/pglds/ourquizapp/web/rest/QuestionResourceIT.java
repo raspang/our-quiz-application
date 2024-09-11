@@ -47,6 +47,15 @@ class QuestionResourceIT {
     private static final Boolean DEFAULT_ENABLE = false;
     private static final Boolean UPDATED_ENABLE = true;
 
+    private static final String DEFAULT_CORRECT_ANSWER_2 = "AAAAAAAAAA";
+    private static final String UPDATED_CORRECT_ANSWER_2 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CORRECT_ANSWER_3 = "AAAAAAAAAA";
+    private static final String UPDATED_CORRECT_ANSWER_3 = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CORRECT_ANSWER_4 = "AAAAAAAAAA";
+    private static final String UPDATED_CORRECT_ANSWER_4 = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/questions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -81,7 +90,10 @@ class QuestionResourceIT {
             .questionText(DEFAULT_QUESTION_TEXT)
             .difficultyLevel(DEFAULT_DIFFICULTY_LEVEL)
             .correctAnswer(DEFAULT_CORRECT_ANSWER)
-            .enable(DEFAULT_ENABLE);
+            .enable(DEFAULT_ENABLE)
+            .correctAnswer2(DEFAULT_CORRECT_ANSWER_2)
+            .correctAnswer3(DEFAULT_CORRECT_ANSWER_3)
+            .correctAnswer4(DEFAULT_CORRECT_ANSWER_4);
         return question;
     }
 
@@ -97,7 +109,10 @@ class QuestionResourceIT {
             .questionText(UPDATED_QUESTION_TEXT)
             .difficultyLevel(UPDATED_DIFFICULTY_LEVEL)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
-            .enable(UPDATED_ENABLE);
+            .enable(UPDATED_ENABLE)
+            .correctAnswer2(UPDATED_CORRECT_ANSWER_2)
+            .correctAnswer3(UPDATED_CORRECT_ANSWER_3)
+            .correctAnswer4(UPDATED_CORRECT_ANSWER_4);
         return question;
     }
 
@@ -217,7 +232,10 @@ class QuestionResourceIT {
             .andExpect(jsonPath("$.[*].questionText").value(hasItem(DEFAULT_QUESTION_TEXT)))
             .andExpect(jsonPath("$.[*].difficultyLevel").value(hasItem(DEFAULT_DIFFICULTY_LEVEL)))
             .andExpect(jsonPath("$.[*].correctAnswer").value(hasItem(DEFAULT_CORRECT_ANSWER)))
-            .andExpect(jsonPath("$.[*].enable").value(hasItem(DEFAULT_ENABLE.booleanValue())));
+            .andExpect(jsonPath("$.[*].enable").value(hasItem(DEFAULT_ENABLE.booleanValue())))
+            .andExpect(jsonPath("$.[*].correctAnswer2").value(hasItem(DEFAULT_CORRECT_ANSWER_2)))
+            .andExpect(jsonPath("$.[*].correctAnswer3").value(hasItem(DEFAULT_CORRECT_ANSWER_3)))
+            .andExpect(jsonPath("$.[*].correctAnswer4").value(hasItem(DEFAULT_CORRECT_ANSWER_4)));
     }
 
     @Test
@@ -236,7 +254,10 @@ class QuestionResourceIT {
             .andExpect(jsonPath("$.questionText").value(DEFAULT_QUESTION_TEXT))
             .andExpect(jsonPath("$.difficultyLevel").value(DEFAULT_DIFFICULTY_LEVEL))
             .andExpect(jsonPath("$.correctAnswer").value(DEFAULT_CORRECT_ANSWER))
-            .andExpect(jsonPath("$.enable").value(DEFAULT_ENABLE.booleanValue()));
+            .andExpect(jsonPath("$.enable").value(DEFAULT_ENABLE.booleanValue()))
+            .andExpect(jsonPath("$.correctAnswer2").value(DEFAULT_CORRECT_ANSWER_2))
+            .andExpect(jsonPath("$.correctAnswer3").value(DEFAULT_CORRECT_ANSWER_3))
+            .andExpect(jsonPath("$.correctAnswer4").value(DEFAULT_CORRECT_ANSWER_4));
     }
 
     @Test
@@ -263,7 +284,10 @@ class QuestionResourceIT {
             .questionText(UPDATED_QUESTION_TEXT)
             .difficultyLevel(UPDATED_DIFFICULTY_LEVEL)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
-            .enable(UPDATED_ENABLE);
+            .enable(UPDATED_ENABLE)
+            .correctAnswer2(UPDATED_CORRECT_ANSWER_2)
+            .correctAnswer3(UPDATED_CORRECT_ANSWER_3)
+            .correctAnswer4(UPDATED_CORRECT_ANSWER_4);
 
         restQuestionMockMvc
             .perform(
@@ -345,7 +369,8 @@ class QuestionResourceIT {
             .number(UPDATED_NUMBER)
             .difficultyLevel(UPDATED_DIFFICULTY_LEVEL)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
-            .enable(UPDATED_ENABLE);
+            .enable(UPDATED_ENABLE)
+            .correctAnswer2(UPDATED_CORRECT_ANSWER_2);
 
         restQuestionMockMvc
             .perform(
@@ -378,7 +403,10 @@ class QuestionResourceIT {
             .questionText(UPDATED_QUESTION_TEXT)
             .difficultyLevel(UPDATED_DIFFICULTY_LEVEL)
             .correctAnswer(UPDATED_CORRECT_ANSWER)
-            .enable(UPDATED_ENABLE);
+            .enable(UPDATED_ENABLE)
+            .correctAnswer2(UPDATED_CORRECT_ANSWER_2)
+            .correctAnswer3(UPDATED_CORRECT_ANSWER_3)
+            .correctAnswer4(UPDATED_CORRECT_ANSWER_4);
 
         restQuestionMockMvc
             .perform(

@@ -21,7 +21,7 @@ export class QuestionUpdateComponent implements OnInit {
   isSaving = false;
   question: IQuestion | null = null;
 
-  protected participantService = inject(QuestionService);
+  protected questionService = inject(QuestionService);
   protected questionFormService = inject(QuestionFormService);
   protected activatedRoute = inject(ActivatedRoute);
 
@@ -45,9 +45,9 @@ export class QuestionUpdateComponent implements OnInit {
     this.isSaving = true;
     const question = this.questionFormService.getQuestion(this.editForm);
     if (question.id !== null) {
-      this.subscribeToSaveResponse(this.participantService.update(question));
+      this.subscribeToSaveResponse(this.questionService.update(question));
     } else {
-      this.subscribeToSaveResponse(this.participantService.create(question));
+      this.subscribeToSaveResponse(this.questionService.create(question));
     }
   }
 

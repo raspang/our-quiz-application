@@ -38,11 +38,6 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_visible">Visible</label>
-          <input type="checkbox" class="form-check" name="visible" id="field_visible" data-cy="visible" formControlName="visible" />
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_question">Question</label>
           <select
             class="form-control"
@@ -51,6 +46,7 @@
             name="question"
             formControlName="question"
             [compareWith]="compareQuestion"
+            [disabled]="true"
           >
             <option [ngValue]="null"></option>
             @for (questionOption of questionsSharedCollection; track $index) {
@@ -61,12 +57,24 @@
 
         <div class="mb-3">
           <label class="form-label" for="field_user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+          <select
+            class="form-control"
+            id="field_user"
+            data-cy="user"
+            name="user"
+            formControlName="user"
+            [compareWith]="compareUser"
+            [disabled]="true"
+          >
             <option [ngValue]="null"></option>
             @for (userOption of usersSharedCollection; track $index) {
               <option [ngValue]="userOption">{{ userOption.login }}</option>
             }
           </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="field_visible">Visible</label>
+          <input type="checkbox" class="form-check" name="visible" id="field_visible" data-cy="visible" formControlName="visible" />
         </div>
       </div>
 

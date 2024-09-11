@@ -30,14 +30,14 @@ export class AnswerUpdateComponent implements OnInit {
 
   protected answerService = inject(AnswerService);
   protected answerFormService = inject(AnswerFormService);
-  protected participantService = inject(QuestionService);
+  protected questionService = inject(QuestionService);
   protected userService = inject(UserService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: AnswerFormGroup = this.answerFormService.createAnswerFormGroup();
 
-  compareQuestion = (o1: IQuestion | null, o2: IQuestion | null): boolean => this.participantService.compareQuestion(o1, o2);
+  compareQuestion = (o1: IQuestion | null, o2: IQuestion | null): boolean => this.questionService.compareQuestion(o1, o2);
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
@@ -89,7 +89,7 @@ export class AnswerUpdateComponent implements OnInit {
     this.answer = answer;
     this.answerFormService.resetForm(this.editForm, answer);
 
-    this.questionsSharedCollection = this.participantService.addQuestionToCollectionIfMissing<IQuestion>(
+    this.questionsSharedCollection = this.questionService.addQuestionToCollectionIfMissing<IQuestion>(
       this.questionsSharedCollection,
       answer.question,
     );
@@ -97,13 +97,11 @@ export class AnswerUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.participantService
+    this.questionService
       .query()
       .pipe(map((res: HttpResponse<IQuestion[]>) => res.body ?? []))
       .pipe(
-        map((questions: IQuestion[]) =>
-          this.participantService.addQuestionToCollectionIfMissing<IQuestion>(questions, this.answer?.question),
-        ),
+        map((questions: IQuestion[]) => this.questionService.addQuestionToCollectionIfMissing<IQuestion>(questions, this.answer?.question)),
       )
       .subscribe((questions: IQuestion[]) => (this.questionsSharedCollection = questions));
 

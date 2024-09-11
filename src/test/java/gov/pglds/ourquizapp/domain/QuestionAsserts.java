@@ -51,7 +51,10 @@ public class QuestionAsserts {
             .satisfies(e -> assertThat(e.getQuestionText()).as("check questionText").isEqualTo(actual.getQuestionText()))
             .satisfies(e -> assertThat(e.getDifficultyLevel()).as("check difficultyLevel").isEqualTo(actual.getDifficultyLevel()))
             .satisfies(e -> assertThat(e.getCorrectAnswer()).as("check correctAnswer").isEqualTo(actual.getCorrectAnswer()))
-            .satisfies(e -> assertThat(e.getEnable()).as("check enable").isEqualTo(actual.getEnable()));
+            .satisfies(e -> assertThat(e.getEnable()).as("check enable").isEqualTo(actual.getEnable()))
+            .satisfies(e -> assertThat(e.getCorrectAnswer2()).as("check correctAnswer2").isEqualTo(actual.getCorrectAnswer2()))
+            .satisfies(e -> assertThat(e.getCorrectAnswer3()).as("check correctAnswer3").isEqualTo(actual.getCorrectAnswer3()))
+            .satisfies(e -> assertThat(e.getCorrectAnswer4()).as("check correctAnswer4").isEqualTo(actual.getCorrectAnswer4()));
     }
 
     /**

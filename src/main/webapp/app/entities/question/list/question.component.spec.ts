@@ -88,7 +88,7 @@ describe('Question Management Component', () => {
   });
 
   describe('trackId', () => {
-    it('Should forward to participantService', () => {
+    it('Should forward to questionService', () => {
       const entity = { id: 123 };
       jest.spyOn(service, 'getQuestionIdentifier');
       const id = comp.trackId(0, entity);

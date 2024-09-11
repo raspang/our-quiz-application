@@ -47,8 +47,20 @@ export class AnswerFormService {
       }),
       isCorrect: new FormControl(answerRawValue.isCorrect),
       visible: new FormControl(answerRawValue.visible),
-      question: new FormControl(answerRawValue.question),
-      user: new FormControl(answerRawValue.user),
+      question: new FormControl(
+        { value: answerRawValue.question, disabled: true },
+        {
+          nonNullable: true,
+          validators: [Validators.required],
+        },
+      ),
+      user: new FormControl(
+        { value: answerRawValue.user, disabled: true },
+        {
+          nonNullable: true,
+          validators: [Validators.required],
+        },
+      ),
     });
   }
 

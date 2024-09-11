@@ -26,6 +26,18 @@
     {
       "fieldName": "enable",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "correctAnswer2",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "correctAnswer3",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "correctAnswer4",
+      "fieldType": "String"
     }
   ],
   "name": "Question",

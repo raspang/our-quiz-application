@@ -26,18 +26,18 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_score">Score</label>
-          <input type="number" class="form-control" name="score" id="field_score" data-cy="score" formControlName="score" />
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_user">User</label>
-          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
             <option [ngValue]="null"></option>
             @for (userOption of usersSharedCollection; track $index) {
               <option [ngValue]="userOption">{{ userOption.login }}</option>
             }
           </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_score">Init. Score</label>
+          <input type="number" class="form-control" name="score" id="field_score" data-cy="score" formControlName="score" />
         </div>
       </div>
 

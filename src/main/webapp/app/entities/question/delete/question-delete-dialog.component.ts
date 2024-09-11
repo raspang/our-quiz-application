@@ -15,7 +15,7 @@ import { QuestionService } from '../service/question.service';
 export class QuestionDeleteDialogComponent {
   question?: IQuestion;
 
-  protected participantService = inject(QuestionService);
+  protected questionService = inject(QuestionService);
   protected activeModal = inject(NgbActiveModal);
 
   cancel(): void {
@@ -23,7 +23,7 @@ export class QuestionDeleteDialogComponent {
   }
 
   confirmDelete(id: number): void {
-    this.participantService.delete(id).subscribe(() => {
+    this.questionService.delete(id).subscribe(() => {
       this.activeModal.close(ITEM_DELETED_EVENT);
     });
   }

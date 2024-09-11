@@ -120,14 +120,27 @@ public class Answer implements Serializable {
     }
 
     public void checkAndSetCorrectness() {
-        //this.participant.setScore(this.participant.getScore() + this.question.getDifficultyLevel());
+        String userAnswered = this.answerText.trim().replaceAll("[^a-zA-Z0-9]", "");
 
-        String correctAnswer = this.question.getCorrectAnswer().trim();
-        String userAnswered = this.answerText.trim();
-        correctAnswer = correctAnswer.replaceAll("[^a-zA-Z0-9]", "");
-        userAnswered = userAnswered.replaceAll("[^a-zA-Z0-9]", "");
+        // Handle null values by assigning an empty string if any of the correct answers are null
+        String correctAnswer = this.question.getCorrectAnswer().trim().replaceAll("[^a-zA-Z0-9]", "");
+        String correctAnswer2 = this.question.getCorrectAnswer2() != null
+            ? this.question.getCorrectAnswer2().trim().replaceAll("[^a-zA-Z0-9]", "")
+            : "";
+        String correctAnswer3 = this.question.getCorrectAnswer3() != null
+            ? this.question.getCorrectAnswer3().trim().replaceAll("[^a-zA-Z0-9]", "")
+            : "";
+        String correctAnswer4 = this.question.getCorrectAnswer4() != null
+            ? this.question.getCorrectAnswer4().trim().replaceAll("[^a-zA-Z0-9]", "")
+            : "";
 
+        // Check if user's answer matches any of the correct answers
         this.isCorrect = correctAnswer.equalsIgnoreCase(userAnswered);
+        if (!this.isCorrect) {
+            this.isCorrect = correctAnswer2.equalsIgnoreCase(userAnswered) ||
+            correctAnswer3.equalsIgnoreCase(userAnswered) ||
+            correctAnswer4.equalsIgnoreCase(userAnswered);
+        }
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

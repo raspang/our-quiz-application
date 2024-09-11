@@ -31,7 +31,7 @@ export class QuizBowlUserFormService {
     const quizBowlUserRawValue = {
       ...this.getFormDefaults(),
       ...quizBowlUser,
-      score: quizBowlUser.score ?? 0, // Initialize score to 0 if not provided
+      score: quizBowlUser.score ?? 0, // Initialize score to 0 if it's not provided
     };
     return new FormGroup<QuizBowlUserFormGroupContent>({
       id: new FormControl(
@@ -42,9 +42,7 @@ export class QuizBowlUserFormService {
         },
       ),
       organization: new FormControl(quizBowlUserRawValue.organization),
-      score: new FormControl(quizBowlUserRawValue.score, {
-        validators: [Validators.required], // Make score required
-      }),
+      score: new FormControl(quizBowlUserRawValue.score),
       user: new FormControl(quizBowlUserRawValue.user),
     });
   }

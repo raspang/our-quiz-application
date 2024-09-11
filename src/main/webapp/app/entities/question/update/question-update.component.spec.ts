@@ -15,7 +15,7 @@ describe('Question Management Update Component', () => {
   let fixture: ComponentFixture<QuestionUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let questionFormService: QuestionFormService;
-  let participantService: QuestionService;
+  let questionService: QuestionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -37,7 +37,7 @@ describe('Question Management Update Component', () => {
     fixture = TestBed.createComponent(QuestionUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     questionFormService = TestBed.inject(QuestionFormService);
-    participantService = TestBed.inject(QuestionService);
+    questionService = TestBed.inject(QuestionService);
 
     comp = fixture.componentInstance;
   });
@@ -59,7 +59,7 @@ describe('Question Management Update Component', () => {
       const saveSubject = new Subject<HttpResponse<IQuestion>>();
       const question = { id: 123 };
       jest.spyOn(questionFormService, 'getQuestion').mockReturnValue(question);
-      jest.spyOn(participantService, 'update').mockReturnValue(saveSubject);
+      jest.spyOn(questionService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ question });
       comp.ngOnInit();
@@ -73,7 +73,7 @@ describe('Question Management Update Component', () => {
       // THEN
       expect(questionFormService.getQuestion).toHaveBeenCalled();
       expect(comp.previousState).toHaveBeenCalled();
-      expect(participantService.update).toHaveBeenCalledWith(expect.objectContaining(question));
+      expect(questionService.update).toHaveBeenCalledWith(expect.objectContaining(question));
       expect(comp.isSaving).toEqual(false);
     });
 
@@ -82,7 +82,7 @@ describe('Question Management Update Component', () => {
       const saveSubject = new Subject<HttpResponse<IQuestion>>();
       const question = { id: 123 };
       jest.spyOn(questionFormService, 'getQuestion').mockReturnValue({ id: null });
-      jest.spyOn(participantService, 'create').mockReturnValue(saveSubject);
+      jest.spyOn(questionService, 'create').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ question: null });
       comp.ngOnInit();
@@ -95,7 +95,7 @@ describe('Question Management Update Component', () => {
 
       // THEN
       expect(questionFormService.getQuestion).toHaveBeenCalled();
-      expect(participantService.create).toHaveBeenCalled();
+      expect(questionService.create).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).toHaveBeenCalled();
     });
@@ -104,7 +104,7 @@ describe('Question Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<HttpResponse<IQuestion>>();
       const question = { id: 123 };
-      jest.spyOn(participantService, 'update').mockReturnValue(saveSubject);
+      jest.spyOn(questionService, 'update').mockReturnValue(saveSubject);
       jest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ question });
       comp.ngOnInit();
@@ -115,7 +115,7 @@ describe('Question Management Update Component', () => {
       saveSubject.error('This is an error!');
 
       // THEN
-      expect(participantService.update).toHaveBeenCalled();
+      expect(questionService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
     });

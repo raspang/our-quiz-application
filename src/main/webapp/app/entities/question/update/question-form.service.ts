@@ -23,6 +23,9 @@ type QuestionFormGroupContent = {
   difficultyLevel: FormControl<IQuestion['difficultyLevel']>;
   correctAnswer: FormControl<IQuestion['correctAnswer']>;
   enable: FormControl<IQuestion['enable']>;
+  correctAnswer2: FormControl<IQuestion['correctAnswer2']>;
+  correctAnswer3: FormControl<IQuestion['correctAnswer3']>;
+  correctAnswer4: FormControl<IQuestion['correctAnswer4']>;
 };
 
 export type QuestionFormGroup = FormGroup<QuestionFormGroupContent>;
@@ -52,7 +55,15 @@ export class QuestionFormService {
       correctAnswer: new FormControl(questionRawValue.correctAnswer, {
         validators: [Validators.required],
       }),
-      enable: new FormControl({ value: false, disabled: true }),
+      enable: new FormControl(
+        { value: questionRawValue.enable, disabled: true },
+        {
+          validators: [Validators.required],
+        },
+      ),
+      correctAnswer2: new FormControl(questionRawValue.correctAnswer2),
+      correctAnswer3: new FormControl(questionRawValue.correctAnswer3),
+      correctAnswer4: new FormControl(questionRawValue.correctAnswer4),
     });
   }
 
@@ -66,6 +77,8 @@ export class QuestionFormService {
       {
         ...questionRawValue,
         id: { value: questionRawValue.id, disabled: true },
+        number: question.number ?? 0, // Initialize score to 0 if it's not provided
+        difficultyLevel: question.difficultyLevel ?? 1, // Initialize score to 0 if it's not provided
       } as any /* cast to workaround https://github.com/angular/angular/issues/46458 */,
     );
   }

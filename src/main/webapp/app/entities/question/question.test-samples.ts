@@ -1,33 +1,39 @@
 import { IQuestion, NewQuestion } from './question.model';
 
 export const sampleWithRequiredData: IQuestion = {
-  id: 9905,
-  number: 27585,
-  questionText: 'starchy reckless oof',
-  correctAnswer: 'to',
+  id: 18898,
+  number: 26815,
+  questionText: 'depressive',
+  correctAnswer: 'nearly nor until',
 };
 
 export const sampleWithPartialData: IQuestion = {
-  id: 23658,
-  number: 7908,
-  questionText: 'yearningly',
-  difficultyLevel: 9494,
-  correctAnswer: 'concentration',
+  id: 22745,
+  number: 3300,
+  questionText: 'huzzah',
+  difficultyLevel: 13349,
+  correctAnswer: 'burly bank daffodil',
+  enable: false,
+  correctAnswer2: 'for',
+  correctAnswer3: 'unless',
 };
 
 export const sampleWithFullData: IQuestion = {
-  id: 25295,
-  number: 18888,
-  questionText: 'condominium wisely as',
-  difficultyLevel: 21603,
-  correctAnswer: 'anenst anti rightfully',
-  enable: true,
+  id: 30816,
+  number: 22903,
+  questionText: 'rightfully',
+  difficultyLevel: 15765,
+  correctAnswer: 'market yippee',
+  enable: false,
+  correctAnswer2: 'fool beside',
+  correctAnswer3: 'upside-down after',
+  correctAnswer4: 'if',
 };
 
 export const sampleWithNewData: NewQuestion = {
-  number: 18837,
-  questionText: 'amongst',
-  correctAnswer: 'opposite fool',
+  number: 6873,
+  questionText: 'apud ugh redistribute',
+  correctAnswer: 'gamebird quicker',
   id: null,
 };
 

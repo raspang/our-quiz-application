@@ -42,7 +42,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-
             <th scope="col" jhiSortBy="organization">
               <div class="d-flex">
                 <span>Organization</span>
@@ -67,12 +66,11 @@
           </tr>
         </thead>
         <tbody>
-          @for (quizBowlUser of quizBowlUsers; track trackId; let i = $index) {
+          @for (quizBowlUser of quizBowlUsers; track trackId) {
             <tr data-cy="entityTable">
               <td>
                 <a [routerLink]="['/quiz-bowl-user', quizBowlUser.id, 'view']">{{ quizBowlUser.id }}</a>
               </td>
-
               <td>{{ quizBowlUser.organization }}</td>
               <td>
                 {{ quizBowlUser.user?.login }}

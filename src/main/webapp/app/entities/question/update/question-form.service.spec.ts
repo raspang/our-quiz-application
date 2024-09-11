@@ -25,6 +25,9 @@ describe('Question Form Service', () => {
             difficultyLevel: expect.any(Object),
             correctAnswer: expect.any(Object),
             enable: expect.any(Object),
+            correctAnswer2: expect.any(Object),
+            correctAnswer3: expect.any(Object),
+            correctAnswer4: expect.any(Object),
           }),
         );
       });
@@ -40,6 +43,9 @@ describe('Question Form Service', () => {
             difficultyLevel: expect.any(Object),
             correctAnswer: expect.any(Object),
             enable: expect.any(Object),
+            correctAnswer2: expect.any(Object),
+            correctAnswer3: expect.any(Object),
+            correctAnswer4: expect.any(Object),
           }),
         );
       });

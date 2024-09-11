@@ -158,6 +158,15 @@ public class QuestionResource {
                 if (question.getEnable() != null) {
                     existingQuestion.setEnable(question.getEnable());
                 }
+                if (question.getCorrectAnswer2() != null) {
+                    existingQuestion.setCorrectAnswer2(question.getCorrectAnswer2());
+                }
+                if (question.getCorrectAnswer3() != null) {
+                    existingQuestion.setCorrectAnswer3(question.getCorrectAnswer3());
+                }
+                if (question.getCorrectAnswer4() != null) {
+                    existingQuestion.setCorrectAnswer4(question.getCorrectAnswer4());
+                }
 
                 return existingQuestion;
             })

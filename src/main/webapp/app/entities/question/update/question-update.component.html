@@ -77,19 +77,53 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_enable">Enable</label>
+          <label class="form-label" for="field_correctAnswer2">Correct Answer 2</label>
           <input
-            type="checkbox"
-            class="form-check"
-            name="enable"
-            id="field_enable"
-            data-cy="enable"
-            formControlName="enable"
-            [disabled]="true"
+            type="text"
+            class="form-control"
+            name="correctAnswer2"
+            id="field_correctAnswer2"
+            data-cy="correctAnswer2"
+            formControlName="correctAnswer2"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_correctAnswer3">Correct Answer 3</label>
+          <input
+            type="text"
+            class="form-control"
+            name="correctAnswer3"
+            id="field_correctAnswer3"
+            data-cy="correctAnswer3"
+            formControlName="correctAnswer3"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_correctAnswer4">Correct Answer 4</label>
+          <input
+            type="text"
+            class="form-control"
+            name="correctAnswer4"
+            id="field_correctAnswer4"
+            data-cy="correctAnswer4"
+            formControlName="correctAnswer4"
           />
         </div>
       </div>
-
+      <div class="mb-3">
+        <label class="form-label" for="field_enable">Enable</label>
+        <input
+          type="checkbox"
+          class="form-check"
+          name="enable"
+          id="field_enable"
+          data-cy="enable"
+          formControlName="enable"
+          [disabled]="true"
+        />
+      </div>
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>

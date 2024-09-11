@@ -109,27 +109,30 @@ public class AnswerResource {
         }
 
         // update the score in quizBowl
-        Optional<Answer> preAns = answerRepository.findById(id);
-        if (preAns.isPresent()) {
-            Optional<QuizBowlUser> quizBowlUser = quizBowlUserRepository.findOneWithToOneRelationships(answer.getUser().getId());
-            QuizBowlUser myQuizBowlUser = getQuizBowlUser(answer, quizBowlUser, preAns);
-            quizBowlUserRepository.save(myQuizBowlUser);
-        }
+        Optional<Answer> preAnsOps = answerRepository.findById(id);
+        Answer preAns = preAnsOps.orElseThrow(() -> new BadRequestAlertException("Error: no Answer found", ENTITY_NAME, "Answer"));
+
+        Optional<QuizBowlUser> quizBowlUser = quizBowlUserRepository.findOneWithToOneRelationships(answer.getUser().getId());
+
+        QuizBowlUser myQuizBowlUser = getQuizBowlUser(answer, quizBowlUser, preAns);
+        quizBowlUserRepository.save(myQuizBowlUser);
+
         answer = answerRepository.save(answer);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, answer.getId().toString()))
             .body(answer);
     }
 
-    private static QuizBowlUser getQuizBowlUser(Answer answer, Optional<QuizBowlUser> quizBowlUser, Optional<Answer> preAns) {
+    private static QuizBowlUser getQuizBowlUser(Answer answer, Optional<QuizBowlUser> quizBowlUser, Answer preAns) {
         QuizBowlUser myQuizBowlUser = quizBowlUser.orElseThrow(() -> new BadRequestAlertException("Error", ENTITY_NAME, "quizBowlUser"));
 
-        boolean isCorrect = preAns.get().getIsCorrect();
+        boolean isCorrect = preAns.getIsCorrect();
         if (!isCorrect && answer.getIsCorrect()) {
             myQuizBowlUser.setScore(myQuizBowlUser.getScore() + answer.getQuestion().getDifficultyLevel());
         } else if (isCorrect && !answer.getIsCorrect()) {
             myQuizBowlUser.setScore(myQuizBowlUser.getScore() - answer.getQuestion().getDifficultyLevel());
         }
+
         return myQuizBowlUser;
     }
 

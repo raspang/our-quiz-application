@@ -17,7 +17,7 @@
             <column name="number" type="integer">
                 <constraints nullable="false" />
             </column>
-            <column name="question_text" type="varchar(255)">
+            <column name="question_text" type="varchar(500)">
                 <constraints nullable="false" />
             </column>
             <column name="difficulty_level" type="integer">
@@ -27,6 +27,15 @@
                 <constraints nullable="false" />
             </column>
             <column name="enable" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="correct_answer_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="correct_answer_3" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="correct_answer_4" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -55,6 +64,9 @@
             <column name="difficulty_level" type="numeric"/>
             <column name="correct_answer" type="string"/>
             <column name="enable" type="boolean"/>
+            <column name="correct_answer_2" type="string"/>
+            <column name="correct_answer_3" type="string"/>
+            <column name="correct_answer_4" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
