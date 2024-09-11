@@ -2,7 +2,9 @@ package gov.pglds.ourquizapp.web.rest;
 
 import gov.pglds.ourquizapp.domain.Answer;
 import gov.pglds.ourquizapp.domain.Question;
+import gov.pglds.ourquizapp.domain.QuizBowlUser;
 import gov.pglds.ourquizapp.repository.AnswerRepository;
+import gov.pglds.ourquizapp.repository.QuizBowlUserRepository;
 import gov.pglds.ourquizapp.security.AuthoritiesConstants;
 import gov.pglds.ourquizapp.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
@@ -44,8 +46,11 @@ public class AnswerResource {
 
     private final AnswerRepository answerRepository;
 
-    public AnswerResource(AnswerRepository answerRepository) {
+    private final QuizBowlUserRepository quizBowlUserRepository;
+
+    public AnswerResource(AnswerRepository answerRepository, QuizBowlUserRepository quizBowlUserRepository) {
         this.answerRepository = answerRepository;
+        this.quizBowlUserRepository = quizBowlUserRepository;
     }
 
     /**
@@ -103,10 +108,29 @@ public class AnswerResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        // update the score in quizBowl
+        Optional<Answer> preAns = answerRepository.findById(id);
+        if (preAns.isPresent()) {
+            Optional<QuizBowlUser> quizBowlUser = quizBowlUserRepository.findOneWithToOneRelationships(answer.getUser().getId());
+            QuizBowlUser myQuizBowlUser = getQuizBowlUser(answer, quizBowlUser, preAns);
+            quizBowlUserRepository.save(myQuizBowlUser);
+        }
         answer = answerRepository.save(answer);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, answer.getId().toString()))
             .body(answer);
+    }
+
+    private static QuizBowlUser getQuizBowlUser(Answer answer, Optional<QuizBowlUser> quizBowlUser, Optional<Answer> preAns) {
+        QuizBowlUser myQuizBowlUser = quizBowlUser.orElseThrow(() -> new BadRequestAlertException("Error", ENTITY_NAME, "quizBowlUser"));
+
+        boolean isCorrect = preAns.get().getIsCorrect();
+        if (!isCorrect && answer.getIsCorrect()) {
+            myQuizBowlUser.setScore(myQuizBowlUser.getScore() + answer.getQuestion().getDifficultyLevel());
+        } else if (isCorrect && !answer.getIsCorrect()) {
+            myQuizBowlUser.setScore(myQuizBowlUser.getScore() - answer.getQuestion().getDifficultyLevel());
+        }
+        return myQuizBowlUser;
     }
 
     /**
